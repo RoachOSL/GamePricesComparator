@@ -15,14 +15,14 @@ public class ListOfDealsFetcher {
         this.client = client;
     }
 
-    public ListOfDealsFetcher(){
+    public ListOfDealsFetcher() {
         this.client = HttpClient.newBuilder().build();
     }
 
     public String getAllDeals() {
         try {
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("https://www.cheapshark.com/api/1.0/deals?"))
+                    .uri(URI.create("https://www.cheapshark.com/api/1.0/deals"))
                     .GET()
                     .build();
 
@@ -34,5 +34,22 @@ public class ListOfDealsFetcher {
             return "";
         }
     }
+
+    public String getSpecificDealUsingDealsID(String id) {
+        try {
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create("https://www.cheapshark.com/api/1.0/deals?id=" + id))
+                    .GET()
+                    .build();
+
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            return response.body();
+
+        } catch (InterruptedException | IOException exception) {
+            exception.printStackTrace();
+            return "";
+        }
+    }
+
 
 }

@@ -7,7 +7,11 @@ public class Main {
 
 
 
-        System.out.println(listOfDealsFetcher.getAllDeals());
+//        System.out.println(listOfDealsFetcher.getAllDeals());
+
+        System.out.println(listOfDealsFetcher.getSpecificDealUsingDealsID("X8sebHhbc1Ga0dTkgg59WgyM506af9oNZZJLU9uSrX8%3D"));
+
+
 
 
 
