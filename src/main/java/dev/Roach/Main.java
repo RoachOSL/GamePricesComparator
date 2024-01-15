@@ -2,7 +2,14 @@ package dev.Roach;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hell World");
+
+        ListOfDealsFetcher listOfDealsFetcher = new ListOfDealsFetcher();
+
+
+
+        System.out.println(listOfDealsFetcher.getAllDeals());
+
+
 
     }
 }
