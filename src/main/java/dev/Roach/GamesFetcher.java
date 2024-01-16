@@ -8,25 +8,39 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 
-public class ListOfStoresFetcher {
+public class GamesFetcher {
     final HttpClient client;
 
-    public ListOfStoresFetcher(HttpClient client) {
+    public GamesFetcher(HttpClient client) {
         this.client = client;
     }
 
-    public ListOfStoresFetcher() {
+    public GamesFetcher() {
         this.client = HttpClient.newBuilder().build();
     }
 
-    //It is possible to do a GET request and retrieve information of a store using its ID;
-
-    public String getGameContainingSpecificKeyword(String keyword) {
+    public String getGameContainingKeyword(String keyword) {
         try {
             String encodedKeyword = URLEncoder.encode(keyword, StandardCharsets.UTF_8);
 
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create("https://www.cheapshark.com/api/1.0/games?title=" + encodedKeyword))
+                    .GET()
+                    .build();
+
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            return response.body();
+        } catch (InterruptedException | IOException exception) {
+            exception.printStackTrace();
+            return "";
+        }
+    }
+
+    public String getGameUsingID(int id) {
+        try {
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create("https://www.cheapshark.com/api/1.0/games?id=" + id))
                     .GET()
                     .build();
 
@@ -38,5 +52,4 @@ public class ListOfStoresFetcher {
             return "";
         }
     }
-
 }
