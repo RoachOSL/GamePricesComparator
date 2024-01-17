@@ -9,14 +9,10 @@ import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 
 public class GamesFetcher {
-    final HttpClient client;
+    private final HttpClient client;
 
     public GamesFetcher(HttpClient client) {
         this.client = client;
-    }
-
-    public GamesFetcher() {
-        this.client = HttpClient.newBuilder().build();
     }
 
     public String getGameContainingKeyword(String keyword) {

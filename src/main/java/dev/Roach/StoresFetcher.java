@@ -7,18 +7,11 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 public class StoresFetcher {
-    final HttpClient client;
+    private final HttpClient client;
 
     public StoresFetcher(HttpClient client) {
         this.client = client;
     }
-
-    public StoresFetcher() {
-        this.client = HttpClient.newBuilder().build();
-    }
-
-    //I cannot retrieve single shop by ID at this point, I will try to save this list to file,
-    //than create java object and make method to retrieve shop by ID.
 
     public String getAllShops() {
         try {
