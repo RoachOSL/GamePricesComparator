@@ -56,6 +56,11 @@ public class DealsFetcher {
 
 
     public String getDealUsingID(String id) {
+
+        if (id == null) {
+            return "NULL";
+        }
+
         try {
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create("https://www.cheapshark.com/api/1.0/deals?id=" + id))
