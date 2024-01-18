@@ -100,7 +100,7 @@ public class DealsFetcherTest {
     }
 
     @Test
-    public void getDealUsingIDShouldReturnExpectedResponseWhenIdIsNull() throws IOException, InterruptedException {
+    public void getDealUsingIDShouldReturnExpectedResponseWhenIdIsNull() {
 
         DealsFetcher dealsFetcher = new DealsFetcher(null);
 

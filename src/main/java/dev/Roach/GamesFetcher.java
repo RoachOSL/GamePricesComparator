@@ -16,6 +16,9 @@ public class GamesFetcher {
     }
 
     public String getGameContainingKeyword(String keyword) {
+        if (keyword == null) {
+            return "Keyword, cannot be a null";
+        }
         try {
             String encodedKeyword = URLEncoder.encode(keyword, StandardCharsets.UTF_8);
 
@@ -41,7 +44,15 @@ public class GamesFetcher {
                     .build();
 
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-            return response.body();
+
+            var result = response.body();
+
+            if (result.equals("[]")) {
+                return "Wrong ID, game doesn't exist";
+            }
+
+
+            return result;
 
         } catch (InterruptedException | IOException exception) {
             exception.printStackTrace();
