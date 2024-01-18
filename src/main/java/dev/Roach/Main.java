@@ -1,9 +1,11 @@
 package dev.Roach;
 
+import java.net.http.HttpClient;
+
 public class Main {
     public static void main(String[] args) {
 
-//        var client = HttpClient.newBuilder().build();
+        var client = HttpClient.newBuilder().build();
 //
 //        DealsFetcher dealsFetcher = new DealsFetcher(client);
 //

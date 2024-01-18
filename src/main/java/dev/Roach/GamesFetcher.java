@@ -16,9 +16,11 @@ public class GamesFetcher {
     }
 
     public String getGameContainingKeyword(String keyword) {
+
         if (keyword == null) {
-            return "Keyword, cannot be a null";
+            throw new NullPointerException("Keyword can't be a null");
         }
+
         try {
             String encodedKeyword = URLEncoder.encode(keyword, StandardCharsets.UTF_8);
 

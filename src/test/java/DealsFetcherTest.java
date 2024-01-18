@@ -22,13 +22,6 @@ public class DealsFetcherTest {
     private final HttpClient mockClient = Mockito.mock(HttpClient.class);
     private final DealsFetcher mockitoDealsFetcher = new DealsFetcher(mockClient);
 
-    // I am still in the process of learning Mockito tests, and sometimes it's quite hard for me to know what to do.
-    // At the moment writing tests with mockito is kind of challenge for me.
-    // For some of the test, I used ChatGPT, especially for the first one. However, I think I am learning a lot by using it.
-    // I always try to understand what happens and why, but I still encounter difficulties when trying to write some of the tests independently.
-    // I hope that everything is functioning correctly.
-
-
     @Test
     public void getAllDealsReturnCorrectPages() throws IOException, InterruptedException {
 

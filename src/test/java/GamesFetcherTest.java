@@ -1,5 +1,4 @@
 import dev.Roach.GamesFetcher;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
@@ -10,6 +9,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -20,7 +20,6 @@ class GamesFetcherTest {
     private final HttpClient mockClient = Mockito.mock(HttpClient.class);
     private final GamesFetcher mockitoGamesFetcher = new GamesFetcher(mockClient);
 
-    //First tests I wrote 100% by me without looking at the previous code.
 
     @Test
     public void getGameContainingKeywordResponseForValidKeyword() throws IOException, InterruptedException {
@@ -35,14 +34,17 @@ class GamesFetcherTest {
 
 
         String result = mockitoGamesFetcher.getGameContainingKeyword(keyword);
-        Assertions.assertEquals("Mocked response body", result);
+        assertEquals("Mocked response body", result);
     }
 
     @Test
-    public void getGameContainingNullAsKeyword() {
-        String result = mockitoGamesFetcher.getGameContainingKeyword(null);
+    public void getGameContainsNullAsKeyword() {
 
-        Assertions.assertEquals("Keyword, cannot be a null", result);
+        try {
+            mockitoGamesFetcher.getGameContainingKeyword(null);
+        } catch (NullPointerException e) {
+            assertEquals("Keyword  can't be a null", e.getMessage());
+        }
     }
 
     @Test
@@ -58,7 +60,7 @@ class GamesFetcherTest {
 
         String testResult = mockitoGamesFetcher.getGameUsingID(testID);
 
-        Assertions.assertEquals("Test for valid ID", testResult);
+        assertEquals("Test for valid ID", testResult);
     }
 
     @Test
@@ -74,7 +76,7 @@ class GamesFetcherTest {
 
         String result = mockitoGamesFetcher.getGameUsingID(id);
 
-        Assertions.assertEquals("Wrong ID, game doesn't exist", result);
+        assertEquals("Wrong ID, game doesn't exist", result);
     }
 
 }

@@ -25,7 +25,7 @@ public class StoresFetcher {
 
             int statusCode = response.statusCode();
 
-            if(statusCode == 404) {
+            if (statusCode == 404) {
                 return "API endpoint or resource you are trying to access does not exist";
             }
 

@@ -31,12 +31,15 @@ public class DealsFetcher {
         try (FileWriter fw = new FileWriter("listOfAllDeals.txt")) {
 
             HttpResponse<String> initialResponse = client.send(initialRequest, HttpResponse.BodyHandlers.ofString());
-            int totalPages = Integer.parseInt(initialResponse.headers().firstValue("X-Total-Page-Count").orElse("0"));
+            int totalPages = Integer.parseInt(initialResponse.headers().firstValue("X-Total-Page-Count").get());
+
+            int maxAgeDealUptimeInHours = 240;
 
             for (int i = 0; i < totalPages; i++) {
 
                 HttpRequest request = HttpRequest.newBuilder()
-                        .uri(URI.create("https://www.cheapshark.com/api/1.0/deals?maxAge=240&pageNumber=" + i))
+                        .uri(URI.create(String.format("https://www.cheapshark.com/api/1.0/deals?maxAge=%d&pageNumber=%d"
+                                , maxAgeDealUptimeInHours, i)))
                         .GET()
                         .build();
 
