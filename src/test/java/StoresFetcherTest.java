@@ -36,18 +36,6 @@ public class StoresFetcherTest {
 
     }
 
-    @Test
-    public void  getAllShopsHttpStatusCodes404() throws IOException, InterruptedException {
 
-        HttpResponse<String> mockResponse = Mockito.mock(HttpResponse.class);
-
-        when(mockResponse.statusCode()).thenReturn(404);
-        when(mockClient.send(any(HttpRequest.class), any(HttpResponse.BodyHandler.class)))
-                .thenReturn(mockResponse);
-
-        String result = mockitoStoresFetcher.getAllShops();
-
-        Assertions.assertEquals("API endpoint or resource you are trying to access does not exist", result);
-    }
 
 }

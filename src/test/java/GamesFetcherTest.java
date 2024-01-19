@@ -43,7 +43,7 @@ class GamesFetcherTest {
         try {
             mockitoGamesFetcher.getGameContainingKeyword(null);
         } catch (NullPointerException e) {
-            assertEquals("Keyword  can't be a null", e.getMessage());
+            assertEquals("Keyword can't be a null", e.getMessage());
         }
     }
 

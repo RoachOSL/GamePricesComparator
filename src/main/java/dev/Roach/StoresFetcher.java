@@ -22,13 +22,6 @@ public class StoresFetcher {
 
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-
-            int statusCode = response.statusCode();
-
-            if (statusCode == 404) {
-                return "API endpoint or resource you are trying to access does not exist";
-            }
-
             return response.body();
 
         } catch (InterruptedException | IOException exception) {
