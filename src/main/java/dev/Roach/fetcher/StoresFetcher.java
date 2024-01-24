@@ -1,4 +1,4 @@
-package dev.Roach;
+package dev.Roach.fetcher;
 
 import java.io.IOException;
 import java.net.URI;

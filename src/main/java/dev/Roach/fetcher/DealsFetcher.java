@@ -1,5 +1,7 @@
-package dev.Roach;
+package dev.Roach.fetcher;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
@@ -76,6 +78,19 @@ public class DealsFetcher {
             exception.printStackTrace();
             return "";
         }
+    }
+
+    public List<String> readAllDealsFromFile() {
+        List<String> allDeals = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new FileReader("listOfAllDeals.txt"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                allDeals.add(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return allDeals;
     }
 
 

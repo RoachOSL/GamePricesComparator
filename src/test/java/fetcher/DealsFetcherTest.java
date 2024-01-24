@@ -1,4 +1,6 @@
-import dev.Roach.DealsFetcher;
+package fetcher;
+
+import dev.Roach.fetcher.DealsFetcher;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
