@@ -11,10 +11,6 @@ import java.util.List;
 @ToString
 
 public class DealAllList {
-    private List<DealAllPojo> deals;
-
-    public DealAllList(List<DealAllPojo> deals) {
-        this.deals = deals;
-    }
+    private List<List<DealAllPojo>> deals;
 }
 

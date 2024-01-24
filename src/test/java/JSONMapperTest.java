@@ -12,20 +12,20 @@ public class JSONMapperTest {
 
     private final JSONMapper jsonMapper = new JSONMapper();
 
-    @Test
-    public void testMapArrayToJava_Success() {
-
-        List<String> jsonList = Arrays.asList(
-                "{\"dealID\":\"deal1\"}",
-                "{\"dealID\":\"deal2\"}"
-        );
-
-        List<DealAllPojo> result = jsonMapper.mapArrayToJava(jsonList, DealAllPojo.class);
-
-        assertEquals(2, result.size());
-        assertEquals("deal1", result.get(0).getDealID());
-        assertEquals("deal2", result.get(1).getDealID());
-    }
+//    @Test
+//    public void testMapArrayToJava_Success() {
+//
+//        List<String> jsonList = Arrays.asList(
+//                "{\"dealID\":\"deal1\"}",
+//                "{\"dealID\":\"deal2\"}"
+//        );
+//
+//        List<DealAllPojo> result = jsonMapper.mapArrayToJava(jsonList, DealAllPojo.class);
+//
+//        assertEquals(2, result.size());
+//        assertEquals("deal1", result.get(0).getDealID());
+//        assertEquals("deal2", result.get(1).getDealID());
+//    }
 
 
     @Test

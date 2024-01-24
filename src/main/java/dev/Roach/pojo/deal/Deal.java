@@ -4,6 +4,7 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
+import java.util.List;
 import java.util.Objects;
 
 @Getter
@@ -29,17 +30,18 @@ public class Deal {
     }
 
     public static Deal createProperDealObject(DealByIDPojo dealById, DealAllList dealAllList) {
+        String storeID = "NotWorking";
+        String dealID = "NotWorking";
+        String savings = "NotWorking";
 
-        String storeID = "";
-        String dealID = "";
-        String savings = "";
-
-        for (DealAllPojo dealAllPojo : dealAllList.getDeals()) {
-            if (Objects.equals(dealAllPojo.getGameID(), dealById.getGameInfo().getGameID())) {
-                storeID = dealAllPojo.getStoreID();
-                dealID = dealAllPojo.getDealID();
-                savings = dealAllPojo.getSavings();
-                break;
+        for (List<DealAllPojo> dealAllPojoList : dealAllList.getDeals()) {
+            for (DealAllPojo dealAllPojo : dealAllPojoList) {
+                if (Objects.equals(dealAllPojo.getGameID(), dealById.getGameInfo().getGameID())) {
+                    storeID = dealAllPojo.getStoreID();
+                    dealID = dealAllPojo.getDealID();
+                    savings = dealAllPojo.getSavings();
+                    break;
+                }
             }
         }
 

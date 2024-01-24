@@ -30,12 +30,14 @@ public class DealsFetcher {
                 .GET()
                 .build();
 
-        try (FileWriter fw = new FileWriter("listOfAllDeals.txt")) {
+        try (FileWriter fw = new FileWriter("dataFromApi/listOfAllDeals.txt")) {
 
             HttpResponse<String> initialResponse = client.send(initialRequest, HttpResponse.BodyHandlers.ofString());
             int totalPages = Integer.parseInt(initialResponse.headers().firstValue("X-Total-Page-Count").get());
 
             int maxAgeDealUptimeInHours = 240;
+
+            fw.write("[");
 
             for (int i = 0; i < totalPages; i++) {
 
@@ -47,10 +49,18 @@ public class DealsFetcher {
 
                 HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
+
                 allPages.add(response.body());
                 fw.write(response.body());
 
+                if (i < totalPages - 1) {
+                    fw.write(",");
+                }
+
             }
+
+            fw.write("]");
+
             return allPages;
 
         } catch (InterruptedException | IOException exception) {
@@ -65,13 +75,16 @@ public class DealsFetcher {
             return "NULL";
         }
 
-        try {
+        try (FileWriter fw = new FileWriter("dataFromApi/listOfDealByID.txt")) {
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create("https://www.cheapshark.com/api/1.0/deals?id=" + id))
                     .GET()
                     .build();
 
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            fw.write(response.body());
+
             return response.body();
 
         } catch (InterruptedException | IOException exception) {
@@ -80,17 +93,36 @@ public class DealsFetcher {
         }
     }
 
-    public List<String> readAllDealsFromFile() {
-        List<String> allDeals = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new FileReader("listOfAllDeals.txt"))) {
+    public String readAllDealsFromFile() {
+
+        StringBuilder allDeals = new StringBuilder();
+
+        try (BufferedReader br = new BufferedReader(new FileReader("dataFromApi/listOfAllDeals.txt"))) {
             String line;
             while ((line = br.readLine()) != null) {
-                allDeals.add(line);
+                allDeals.append(line);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return allDeals;
+
+        return allDeals.toString();
+    }
+
+    public String readDealUsingIDFromFile() {
+
+        StringBuilder jsonData = new StringBuilder();
+
+        try (BufferedReader reader = new BufferedReader(new FileReader("dataFromApi/listOfDealByID.txt"))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                jsonData.append(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return jsonData.toString();
     }
 
 

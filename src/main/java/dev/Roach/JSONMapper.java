@@ -2,9 +2,10 @@ package dev.Roach;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -21,16 +22,18 @@ public class JSONMapper {
         }
     }
 
-    public <T> List<T> mapArrayToJava(List<String> jsonObjects, Class<T> classPlaceholder) {
-
-        List<T> resultList = new ArrayList<>();
-
+    public <T> List<T> mapArrayToJava(String jsonArray, Class<T[]> classPlaceholder) {
         try {
-            for (String jsonObject : jsonObjects) {
-                T mappedObject = objectMapper.readValue(jsonObject, classPlaceholder);
-                resultList.add(mappedObject);
-            }
-            return resultList;
+            T[] array = objectMapper.readValue(jsonArray, classPlaceholder);
+            return Arrays.asList(array);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public <T> List<List<T>> mapDoubleArrayToJava(String jsonArray, TypeReference<List<List<T>>> typeReference) {
+        try {
+            return objectMapper.readValue(jsonArray, typeReference);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
