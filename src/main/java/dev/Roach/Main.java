@@ -23,16 +23,17 @@ public class Main {
         //Downloading data
 
 //        dealsFetcher.getAllDeals();
-        storesFetcher.getAllShops();
-
-        String dealID = "0f%2B4gT2VVUn4UcmFzPxXnuqoXKAOYoJ5mpFZRWNyohc%3D";
-        dealsFetcher.getDealUsingID(dealID);
-
-        int gameID = 612;
-        gamesFetcher.getGameUsingID(gameID);
-
-        String keyword = "batman";
-        gamesFetcher.getGameContainingKeyword(keyword);
+//        storesFetcher.getAllShops();
+//
+//
+//        String dealID = "0f%2B4gT2VVUn4UcmFzPxXnuqoXKAOYoJ5mpFZRWNyohc%3D";
+//        dealsFetcher.getDealUsingID(dealID);
+//
+//        int gameID = 612;
+//        gamesFetcher.getGameUsingID(gameID);
+//
+//        String keyword = "batman";
+//        gamesFetcher.getGameContainingKeyword(keyword);
 
 
         //Creating a Deal object with provided values
@@ -58,15 +59,12 @@ public class Main {
 
         //Creating a Game object with provided values
 
-//        GamePojo gamePojoByContainingKeyword = jsonMapper.mapToJava(gamesFetcher.readGameContainingKeywordFromFile(), GamePojo.class);
-//        GamePojo gamePojoByID = jsonMapper.mapToJava(gamesFetcher.readGameUsingIDFromFile(), GamePojo.class);
-//
-//        Game gameByID = Game.createProperGameObject(gamePojoByID);
-//        System.out.println(gameByID );
-//
-//        Game gameKeyword = Game.createProperGameObject(gamePojoByContainingKeyword);
+//        List<GamePojo> gamePojos = jsonMapper.mapArrayToJava(gamesFetcher.readGameContainingKeywordFromFile(), GamePojo[].class);
+//        Game gameKeyword = Game.createProperGameObjectByContaingKeyword(gamePojos, "612");
 //        System.out.println(gameKeyword);
 
+//        GameByID gamePojoByID = jsonMapper.mapToJava(gamesFetcher.readGameUsingIDFromFile(), GameByID.class);
+//        System.out.println(gamePojoByID);
 
     }
 }

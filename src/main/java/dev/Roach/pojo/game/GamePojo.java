@@ -13,7 +13,7 @@ public class GamePojo {
 
     private String gameID;
     @JsonProperty("steamAppID")
-    private int steamID;
+    private String steamID;
     @JsonProperty("cheapest")
     private double cheapestPrice;
     private String cheapestDealID;
