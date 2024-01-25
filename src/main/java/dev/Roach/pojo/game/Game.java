@@ -1,21 +1,21 @@
 package dev.Roach.pojo.game;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.Getter;
-import lombok.Setter;
-import lombok.ToString;
-
-@Getter
-@Setter
-@ToString
-
 public class Game {
 
-    @JsonProperty("internalName")
     private String title;
-    @JsonProperty("steamAppID")
+
     private int steamID;
-    @JsonProperty("cheapest")
     private double cheapestPrice;
 
+
+    public Game(String title, int steamID, double cheapestPrice) {
+        this.title = title;
+        this.steamID = steamID;
+        this.cheapestPrice = cheapestPrice;
+
+    }
+
+    public static Game createProperGameObject(GamePojo gamePojo) {
+        return new Game(gamePojo.getTitle(), gamePojo.getSteamID(), gamePojo.getCheapestPrice());
+    }
 }

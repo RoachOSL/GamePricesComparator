@@ -1,16 +1,10 @@
 package dev.Roach;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import dev.Roach.fetcher.DealsFetcher;
 import dev.Roach.fetcher.GamesFetcher;
 import dev.Roach.fetcher.StoresFetcher;
-import dev.Roach.pojo.deal.Deal;
-import dev.Roach.pojo.deal.DealAllList;
-import dev.Roach.pojo.deal.DealAllPojo;
-import dev.Roach.pojo.deal.DealByIDPojo;
 
 import java.net.http.HttpClient;
-import java.util.List;
 
 public class Main {
     public static void main(String[] args) {
@@ -23,32 +17,56 @@ public class Main {
 
         StoresFetcher storesFetcher = new StoresFetcher(client);
 
-//        System.out.println(dealsFetcher.getAllDeals());
-//        System.out.println(dealsFetcher.getDealUsingID("X8sebHhbc1Ga0dTkgg59WgyM506af9oNZZJLU9uSrX8%3D"));
-//
-//        System.out.println(gamesFetcher.getGameContainingKeyword(null));
-//        System.out.println(gamesFetcher.getGameUsingID(243801));
-
-//        System.out.println(storesFetcher.getAllShops());
-
         JSONMapper jsonMapper = new JSONMapper();
 
-//        System.out.println(dealsFetcher.getDealUsingID("X8sebHhbc1Ga0dTkgg59WgyM506af9oNZZJLU9uSrX8%3D"));
+
+        //Downloading data
 
 //        dealsFetcher.getAllDeals();
+        storesFetcher.getAllShops();
+
+        String dealID = "0f%2B4gT2VVUn4UcmFzPxXnuqoXKAOYoJ5mpFZRWNyohc%3D";
+        dealsFetcher.getDealUsingID(dealID);
+
+        int gameID = 612;
+        gamesFetcher.getGameUsingID(gameID);
+
+        String keyword = "batman";
+        gamesFetcher.getGameContainingKeyword(keyword);
 
 
-        DealByIDPojo dealByIDPojo = jsonMapper.mapToJava(dealsFetcher.readDealUsingIDFromFile(), DealByIDPojo.class);
-        String allDealsJson = dealsFetcher.readAllDealsFromFile();
+        //Creating a Deal object with provided values
 
-        TypeReference<List<List<DealAllPojo>>> typeRef = new TypeReference<List<List<DealAllPojo>>>() {};
-        List<List<DealAllPojo>> dealAllList = jsonMapper.mapDoubleArrayToJava(allDealsJson, typeRef);
+//        DealByIDPojo dealByIDPojo = jsonMapper.mapToJava(dealsFetcher.readDealUsingIDFromFile(), DealByIDPojo.class);
+//        String allDealsJson = dealsFetcher.readAllDealsFromFile();
+//
+//        TypeReference<List<List<DealAllPojo>>> typeRef = new TypeReference<List<List<DealAllPojo>>>() {};
+//        List<List<DealAllPojo>> dealAllList = jsonMapper.mapDoubleArrayToJava(allDealsJson, typeRef);
+//
+//        DealAllListPojo dealAllListPojoObj = new DealAllListPojo();
+//        dealAllListPojoObj.setDeals(dealAllList);
+//
+//        Deal deal = Deal.createProperDealObject(dealByIDPojo, dealAllListPojoObj);
+//        System.out.println(deal);
 
-        DealAllList dealAllListObj = new DealAllList();
-        dealAllListObj.setDeals(dealAllList);
 
-        Deal deal = Deal.createProperDealObject(dealByIDPojo, dealAllListObj);
-        System.out.println(deal);
+        //Creating a Store object with provided values
+//
+//        List<StoreAllPojo> storeAllPojo = jsonMapper.mapArrayToJava(storesFetcher.readAllShopsFromFile(), StoreAllPojo[].class);
+//        Store store = Store.createProperDealObjectByStoreID(storeAllPojo, "1");
+//        System.out.println(store);
+
+        //Creating a Game object with provided values
+
+//        GamePojo gamePojoByContainingKeyword = jsonMapper.mapToJava(gamesFetcher.readGameContainingKeywordFromFile(), GamePojo.class);
+//        GamePojo gamePojoByID = jsonMapper.mapToJava(gamesFetcher.readGameUsingIDFromFile(), GamePojo.class);
+//
+//        Game gameByID = Game.createProperGameObject(gamePojoByID);
+//        System.out.println(gameByID );
+//
+//        Game gameKeyword = Game.createProperGameObject(gamePojoByContainingKeyword);
+//        System.out.println(gameKeyword);
+
 
     }
 }

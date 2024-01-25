@@ -30,7 +30,7 @@ public class DealsFetcher {
                 .GET()
                 .build();
 
-        try (FileWriter fw = new FileWriter("dataFromApi/listOfAllDeals.txt")) {
+        try (FileWriter fw = new FileWriter("dataFromApi/AllDealsList.txt")) {
 
             HttpResponse<String> initialResponse = client.send(initialRequest, HttpResponse.BodyHandlers.ofString());
             int totalPages = Integer.parseInt(initialResponse.headers().firstValue("X-Total-Page-Count").get());
@@ -75,7 +75,7 @@ public class DealsFetcher {
             return "NULL";
         }
 
-        try (FileWriter fw = new FileWriter("dataFromApi/listOfDealByID.txt")) {
+        try (FileWriter fw = new FileWriter("dataFromApi/DealByIDList.txt")) {
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create("https://www.cheapshark.com/api/1.0/deals?id=" + id))
                     .GET()
@@ -97,7 +97,7 @@ public class DealsFetcher {
 
         StringBuilder allDeals = new StringBuilder();
 
-        try (BufferedReader br = new BufferedReader(new FileReader("dataFromApi/listOfAllDeals.txt"))) {
+        try (BufferedReader br = new BufferedReader(new FileReader("dataFromApi/AllDealsList.txt"))) {
             String line;
             while ((line = br.readLine()) != null) {
                 allDeals.append(line);
@@ -111,18 +111,18 @@ public class DealsFetcher {
 
     public String readDealUsingIDFromFile() {
 
-        StringBuilder jsonData = new StringBuilder();
+        StringBuilder dealByID = new StringBuilder();
 
-        try (BufferedReader reader = new BufferedReader(new FileReader("dataFromApi/listOfDealByID.txt"))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader("dataFromApi/DealByIDList.txt"))) {
             String line;
             while ((line = reader.readLine()) != null) {
-                jsonData.append(line);
+                dealByID.append(line);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return jsonData.toString();
+        return dealByID.toString();
     }
 
 

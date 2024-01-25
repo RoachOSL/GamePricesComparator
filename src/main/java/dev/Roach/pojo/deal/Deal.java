@@ -10,13 +10,13 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
-
 public class Deal {
     private String storeID; //DealAllPojo
     private String dealID; //DealAllPojo
     private String savings; //DealAllPojo
     private String price; //CheapestPrice
     private String retailPrice;  //GameInfo
+
 
     public Deal(String storeID, String dealID, String savings, String price, String retailPrice) {
         this.storeID = storeID;
@@ -26,15 +26,12 @@ public class Deal {
         this.retailPrice = retailPrice;
     }
 
-    public Deal() {
-    }
-
-    public static Deal createProperDealObject(DealByIDPojo dealById, DealAllList dealAllList) {
+    public static Deal createProperDealObject(DealByIDPojo dealById, DealAllListPojo dealAllListPojo) {
         String storeID = "NotWorking";
         String dealID = "NotWorking";
         String savings = "NotWorking";
 
-        for (List<DealAllPojo> dealAllPojoList : dealAllList.getDeals()) {
+        for (List<DealAllPojo> dealAllPojoList : dealAllListPojo.getDeals()) {
             for (DealAllPojo dealAllPojo : dealAllPojoList) {
                 if (Objects.equals(dealAllPojo.getGameID(), dealById.getGameInfo().getGameID())) {
                     storeID = dealAllPojo.getStoreID();

@@ -1,10 +1,6 @@
 import dev.Roach.JSONMapper;
-import dev.Roach.pojo.deal.DealAllPojo;
 import dev.Roach.pojo.deal.DealByIDPojo;
 import org.junit.jupiter.api.Test;
-
-import java.util.Arrays;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -67,19 +63,19 @@ public class JSONMapperTest {
         DealByIDPojo result = jsonMapper.mapToJava(json, DealByIDPojo.class);
 
         assertNotNull(result);
-        assertNotNull(result.getGameInfo());
-        assertEquals("1", result.getGameInfo().getStoreID());
-        assertEquals("123", result.getGameInfo().getGameID());
-        assertEquals("Sample Game", result.getGameInfo().getName());
+        assertNotNull(result.getGameInfoPojo());
+        assertEquals("1", result.getGameInfoPojo().getStoreID());
+        assertEquals("123", result.getGameInfoPojo().getGameID());
+        assertEquals("Sample Game", result.getGameInfoPojo().getName());
 
 
-        assertNotNull(result.getCheaperStores());
-        assertFalse(result.getCheaperStores().isEmpty());
-        assertEquals("deal123", result.getCheaperStores().get(0).getDealID());
+        assertNotNull(result.getCheaperStorePojos());
+        assertFalse(result.getCheaperStorePojos().isEmpty());
+        assertEquals("deal123", result.getCheaperStorePojos().get(0).getDealID());
 
 
-        assertNotNull(result.getCheapestPrice());
-        assertEquals("18.99", result.getCheapestPrice().getPrice());
+        assertNotNull(result.getCheapestPricePojo());
+        assertEquals("18.99", result.getCheapestPricePojo().getPrice());
     }
 }
 
