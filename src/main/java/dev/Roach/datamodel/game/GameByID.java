@@ -1,6 +1,6 @@
-package dev.Roach.pojo.game;
+package dev.Roach.datamodel.game;
 
-import dev.Roach.pojo.deal.CheapestPricePojo;
+import dev.Roach.datamodel.deal.CheapestPricePojo;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

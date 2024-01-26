@@ -1,4 +1,4 @@
-package dev.Roach.pojo.game;
+package dev.Roach.datamodel.game;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;

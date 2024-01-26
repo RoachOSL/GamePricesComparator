@@ -1,4 +1,4 @@
-package dev.Roach.pojo.deal;
+package dev.Roach.datamodel.deal;
 
 import lombok.Getter;
 import lombok.Setter;

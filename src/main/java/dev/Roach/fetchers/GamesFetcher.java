@@ -1,4 +1,4 @@
-package dev.Roach.fetcher;
+package dev.Roach.fetchers;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

@@ -1,6 +1,6 @@
 package fetcher;
 
-import dev.Roach.fetcher.GamesFetcher;
+import dev.Roach.fetchers.GamesFetcher;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;

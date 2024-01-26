@@ -1,5 +1,5 @@
 import dev.Roach.JSONMapper;
-import dev.Roach.pojo.deal.DealByIDPojo;
+import dev.Roach.datamodel.deal.DealByIDPojo;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
