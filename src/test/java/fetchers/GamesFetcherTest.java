@@ -1,4 +1,4 @@
-package fetcher;
+package fetchers;
 
 import dev.Roach.fetchers.GamesFetcher;
 import org.junit.jupiter.api.Test;

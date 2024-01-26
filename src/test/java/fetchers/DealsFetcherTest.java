@@ -1,4 +1,4 @@
-package fetcher;
+package fetchers;
 
 import dev.Roach.fetchers.DealsFetcher;
 import org.junit.jupiter.api.Assertions;
