@@ -4,9 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.List;
-import java.util.Objects;
-
 @Getter
 @Setter
 @ToString
@@ -31,16 +28,16 @@ public class Deal {
         String dealID = "NotWorking";
         String savings = "NotWorking";
 
-        for (List<DealAllPojo> dealAllPojoList : dealAllListPojo.getDeals()) {
-            for (DealAllPojo dealAllPojo : dealAllPojoList) {
-                if (Objects.equals(dealAllPojo.getGameID(), dealById.getGameInfo().getGameID())) {
-                    storeID = dealAllPojo.getStoreID();
-                    dealID = dealAllPojo.getDealID();
-                    savings = dealAllPojo.getSavings();
-                    break;
-                }
-            }
-        }
+//        for (List<DealAllPojo> dealAllPojoList : dealAllListPojo.getDeals()) {
+//            for (DealAllPojo dealAllPojo : dealAllPojoList) {
+//                if (Objects.equals(dealAllPojo.getGameID(), dealById.getGameInfo().getGameID())) {
+//                    storeID = dealAllPojo.getStoreID();
+//                    dealID = dealAllPojo.getDealID();
+//                    savings = dealAllPojo.getSavings();
+//                    break;
+//                }
+//            }
+//        }
 
         String price = dealById.getCheapestPrice().getPrice();
         String retailPrice = dealById.getGameInfo().getRetailPrice();

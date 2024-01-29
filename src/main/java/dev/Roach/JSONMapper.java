@@ -4,8 +4,9 @@ package dev.Roach;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.Roach.datamodel.deal.DealAllPojo;
 
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -22,10 +23,10 @@ public class JSONMapper {
         }
     }
 
-    public <T> List<T> mapArrayToJava(String jsonArray, Class<T[]> classPlaceholder) {
+    public ArrayList<DealAllPojo> mapArrayOfDealsToJava(String json) {
         try {
-            T[] array = objectMapper.readValue(jsonArray, classPlaceholder);
-            return Arrays.asList(array);
+            return objectMapper.readValue(json, new TypeReference<ArrayList<DealAllPojo>>() {
+            });
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

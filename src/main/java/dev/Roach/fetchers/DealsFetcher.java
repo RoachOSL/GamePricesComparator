@@ -1,16 +1,21 @@
 package dev.Roach.fetchers;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import dev.Roach.JSONMapper;
+import dev.Roach.datamodel.deal.DealAllListPojo;
+import dev.Roach.datamodel.deal.DealAllPojo;
+
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 
 public class DealsFetcher {
@@ -21,23 +26,23 @@ public class DealsFetcher {
         this.client = client;
     }
 
-    public List<String> getAllDeals() {
+    public ArrayList<DealAllListPojo> getAllDeals() {
 
-        List<String> allPages = new ArrayList<>();
+        ArrayList<DealAllListPojo> allPages = new ArrayList<>();
+        JSONMapper jsonMapper = new JSONMapper();
+        ObjectMapper objectMapper = new ObjectMapper();
 
         HttpRequest initialRequest = HttpRequest.newBuilder()
                 .uri(URI.create("https://www.cheapshark.com/api/1.0/deals?pageNumber=0"))
                 .GET()
                 .build();
 
-        try (FileWriter fw = new FileWriter("dataFromApi/AllDealsList.txt")) {
+        try {
 
             HttpResponse<String> initialResponse = client.send(initialRequest, HttpResponse.BodyHandlers.ofString());
             int totalPages = Integer.parseInt(initialResponse.headers().firstValue("X-Total-Page-Count").get());
 
             int maxAgeDealUptimeInHours = 240;
-
-            fw.write("[");
 
             for (int i = 0; i < totalPages; i++) {
 
@@ -49,23 +54,25 @@ public class DealsFetcher {
 
                 HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
+                ArrayList<DealAllPojo> dealAllPojos = jsonMapper.mapArrayOfDealsToJava(response.body());
 
-                allPages.add(response.body());
-                fw.write(response.body());
+                DealAllListPojo dealAllListPojo = new DealAllListPojo(dealAllPojos);
 
-                if (i < totalPages - 1) {
-                    fw.write(",");
-                }
-
+                allPages.add(dealAllListPojo);
             }
 
-            fw.write("]");
+            String json = objectMapper.writeValueAsString(allPages);
+
+
+            try (FileWriter fw = new FileWriter("dataFromApi/AllDealsList.txt")) {
+                fw.write(json);
+            }
 
             return allPages;
 
         } catch (InterruptedException | IOException exception) {
             exception.printStackTrace();
-            return Collections.emptyList();
+            return new ArrayList<>();
         }
     }
 
@@ -75,15 +82,13 @@ public class DealsFetcher {
             return "NULL";
         }
 
-        try (FileWriter fw = new FileWriter("dataFromApi/DealByIDList.txt")) {
+        try {
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create("https://www.cheapshark.com/api/1.0/deals?id=" + id))
                     .GET()
                     .build();
 
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-            fw.write(response.body());
 
             return response.body();
 
@@ -93,37 +98,23 @@ public class DealsFetcher {
         }
     }
 
-    public String readAllDealsFromFile() {
+    public ArrayList<DealAllListPojo> readAllDealsFromFile() {
+        String filePath = "dataFromApi/AllDealsList.txt";
+        ObjectMapper objectMapper = new ObjectMapper();
 
-        StringBuilder allDeals = new StringBuilder();
-
-        try (BufferedReader br = new BufferedReader(new FileReader("dataFromApi/AllDealsList.txt"))) {
-            String line;
-            while ((line = br.readLine()) != null) {
-                allDeals.append(line);
+        try {
+            if (new File(filePath).exists()) {
+                String json = new String(Files.readAllBytes(Paths.get(filePath)));
+                return objectMapper.readValue(json, new TypeReference<ArrayList<DealAllListPojo>>() {
+                });
+            } else {
+                System.out.println("File not found. Fetching from API.");
+                return new ArrayList<>();
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
+            return new ArrayList<>();
         }
-
-        return allDeals.toString();
     }
-
-    public String readDealUsingIDFromFile() {
-
-        StringBuilder dealByID = new StringBuilder();
-
-        try (BufferedReader reader = new BufferedReader(new FileReader("dataFromApi/DealByIDList.txt"))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                dealByID.append(line);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return dealByID.toString();
-    }
-
 
 }

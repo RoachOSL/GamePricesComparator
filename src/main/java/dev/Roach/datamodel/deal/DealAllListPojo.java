@@ -2,12 +2,18 @@ package dev.Roach.datamodel.deal;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
-import java.util.List;
+import java.util.ArrayList;
 
 @Getter
 @Setter
+@ToString
 public class DealAllListPojo {
-    private List<List<DealAllPojo>> deals;
+    private ArrayList<DealAllPojo> deals;
+
+    public DealAllListPojo(ArrayList<DealAllPojo> deals) {
+        this.deals = deals;
+    }
 }
 
