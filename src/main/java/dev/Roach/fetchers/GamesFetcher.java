@@ -1,5 +1,8 @@
 package dev.Roach.fetchers;
 
+import dev.Roach.JSONMapper;
+import dev.Roach.datamodel.game.GamePojo;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.URLEncoder;
@@ -7,6 +10,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
 
 public class GamesFetcher {
     private final HttpClient client;
@@ -15,7 +19,9 @@ public class GamesFetcher {
         this.client = client;
     }
 
-    public String getGameContainingKeyword(String keyword) {
+    public ArrayList<GamePojo> getGameContainingKeyword(String keyword) {
+
+        JSONMapper jsonMapper = new JSONMapper();
 
         if (keyword == null) {
             throw new NullPointerException("Keyword can't be a null");
@@ -31,11 +37,11 @@ public class GamesFetcher {
 
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-            return response.body();
+            return jsonMapper.mapArrayOfGamePojoToJava(response.body());
 
         } catch (InterruptedException | IOException exception) {
             exception.printStackTrace();
-            return "";
+            return new ArrayList<>();
         }
     }
 

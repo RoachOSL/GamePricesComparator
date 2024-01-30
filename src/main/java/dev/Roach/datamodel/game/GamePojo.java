@@ -23,5 +23,4 @@ public class GamePojo {
     private String thumb;
 
 
-
 }

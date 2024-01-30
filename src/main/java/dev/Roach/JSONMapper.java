@@ -5,19 +5,21 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.Roach.datamodel.deal.DealAllPojo;
+import dev.Roach.datamodel.game.GamePojo;
+import dev.Roach.datamodel.store.StoreAllPojo;
 
 import java.util.ArrayList;
-import java.util.List;
 
 
 public class JSONMapper {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
-    public <T> T mapToJava(String jsonObject, Class<T> classPlaceholder) {
 
+    public ArrayList<GamePojo> mapArrayOfGamePojoToJava(String json) {
         try {
-            return objectMapper.readValue(jsonObject, classPlaceholder);
+            return objectMapper.readValue(json, new TypeReference<ArrayList<GamePojo>>() {
+            });
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }
@@ -32,17 +34,10 @@ public class JSONMapper {
         }
     }
 
-    public <T> List<List<T>> mapDoubleArrayToJava(String jsonArray, TypeReference<List<List<T>>> typeReference) {
+    public ArrayList<StoreAllPojo> mapArrayOfAllStoresToJava(String json) {
         try {
-            return objectMapper.readValue(jsonArray, typeReference);
-        } catch (JsonProcessingException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    public <T> String mapToJSON(T object) {
-        try {
-            return objectMapper.writeValueAsString(object);
+            return objectMapper.readValue(json, new TypeReference<ArrayList<StoreAllPojo>>() {
+            });
         } catch (JsonProcessingException e) {
             throw new RuntimeException(e);
         }

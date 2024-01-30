@@ -1,11 +1,14 @@
 package dev.Roach.datamodel.deal;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 
 @Getter
 @Setter
+@ToString
 public class DealAllPojo {
 
     private String internalName;
@@ -14,10 +17,13 @@ public class DealAllPojo {
     private String dealID;
     private String storeID;
     private String gameID;
-    private String salePrice;
-    private String normalPrice;
+    @JsonProperty("salePrice")
+    private String price;
+    @JsonProperty("normalPrice")
+    private String retailPrice;
     private String isOnSale;
-    private String savings;
+    @JsonProperty("savings")
+    private double savings;
     private String metacriticScore;
     private String steamRatingText;
     private String steamRatingPercent;

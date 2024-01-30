@@ -108,7 +108,6 @@ public class DealsFetcher {
                 return objectMapper.readValue(json, new TypeReference<ArrayList<DealAllListPojo>>() {
                 });
             } else {
-                System.out.println("File not found. Fetching from API.");
                 return new ArrayList<>();
             }
         } catch (Exception e) {

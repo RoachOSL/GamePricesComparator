@@ -12,6 +12,9 @@ import java.util.ArrayList;
 public class DealAllListPojo {
     private ArrayList<DealAllPojo> deals;
 
+    public DealAllListPojo() {
+    }
+
     public DealAllListPojo(ArrayList<DealAllPojo> deals) {
         this.deals = deals;
     }
