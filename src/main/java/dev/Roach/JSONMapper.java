@@ -6,6 +6,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.Roach.datamodel.deal.DealAllPojo;
 import dev.Roach.datamodel.game.GamePojo;
+import dev.Roach.datamodel.gameLookup.GameDealResponse;
 import dev.Roach.datamodel.store.StoreAllPojo;
 
 import java.util.ArrayList;
@@ -42,5 +43,14 @@ public class JSONMapper {
             throw new RuntimeException(e);
         }
     }
+
+    public GameDealResponse mapToGameDealResponse(String json) {
+        try {
+            return objectMapper.readValue(json, GameDealResponse.class);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 
 }

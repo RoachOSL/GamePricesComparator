@@ -11,7 +11,8 @@ import lombok.ToString;
 
 public class GamePojo {
 
-    private String gameID;
+    @JsonProperty("gameID")
+    private int gameID;
     @JsonProperty("steamAppID")
     private String steamID;
     @JsonProperty("cheapest")

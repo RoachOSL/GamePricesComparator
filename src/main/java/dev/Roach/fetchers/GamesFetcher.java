@@ -2,6 +2,7 @@ package dev.Roach.fetchers;
 
 import dev.Roach.JSONMapper;
 import dev.Roach.datamodel.game.GamePojo;
+import dev.Roach.datamodel.gameLookup.GameDealResponse;
 
 import java.io.IOException;
 import java.net.URI;
@@ -65,6 +66,27 @@ public class GamesFetcher {
         } catch (InterruptedException | IOException exception) {
             exception.printStackTrace();
             return "";
+        }
+    }
+
+    public GameDealResponse getGameDealObjectUsingID(int id) {
+
+        JSONMapper jsonMapper = new JSONMapper();
+
+        try {
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create("https://www.cheapshark.com/api/1.0/games?id=" + id))
+                    .GET()
+                    .build();
+
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+
+            return jsonMapper.mapToGameDealResponse(response.body());
+
+        } catch (InterruptedException | IOException exception) {
+            exception.printStackTrace();
+            return new GameDealResponse();
         }
     }
 

@@ -1,18 +1,10 @@
 package dev.Roach;
 
-import dev.Roach.datamodel.deal.Deal;
-import dev.Roach.datamodel.deal.DealAllListPojo;
-import dev.Roach.datamodel.deal.DealAllPojo;
-import dev.Roach.datamodel.game.Game;
-import dev.Roach.datamodel.game.GamePojo;
-import dev.Roach.datamodel.store.Store;
-import dev.Roach.datamodel.store.StoreAllPojo;
 import dev.Roach.fetchers.DealsFetcher;
 import dev.Roach.fetchers.GamesFetcher;
 import dev.Roach.fetchers.StoresFetcher;
 
 import java.net.http.HttpClient;
-import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
@@ -27,52 +19,61 @@ public class Main {
 
         JSONMapper jsonMapper = new JSONMapper();
 
-        //Deals
+       // //Deals
 
-//        ArrayList<DealAllListPojo> dealAllListPojosFetch = dealsFetcher.getAllDeals();
+// //       ArrayList<DealAllListPojo> dealAllListPojosFetch = dealsFetcher.getAllDeals();
+//
+//        ArrayList<DealAllListPojo> dealAllListPojosFromTheFile = dealsFetcher.readAllDealsFromFile();
+//
+//        ArrayList<Deal> deals = new ArrayList<>();
+//
+//        for (DealAllListPojo dealAllListPojo : dealAllListPojosFromTheFile) {
+//            ArrayList<DealAllPojo> dealAllPojos = dealAllListPojo.getDeals();
+//            for (DealAllPojo dealPojo : dealAllPojos) {
+//                Deal deal = new Deal(dealPojo.getStoreID(), dealPojo.getDealID(), dealPojo.getPrice(),
+//                        dealPojo.getRetailPrice(), dealPojo.getSavings());
+//                deals.add(deal);
+//            }
+//        }
+//
+//        deals.forEach(System.out::println);
 
-        ArrayList<DealAllListPojo> dealAllListPojosFromTheFile = dealsFetcher.readAllDealsFromFile();
+//        //Game
 
-        ArrayList<Deal> deals = new ArrayList<>();
-
-        for (DealAllListPojo dealAllListPojo : dealAllListPojosFromTheFile) {
-            ArrayList<DealAllPojo> dealAllPojos = dealAllListPojo.getDeals();
-            for (DealAllPojo dealPojo : dealAllPojos) {
-                Deal deal = new Deal(dealPojo.getStoreID(), dealPojo.getDealID(), dealPojo.getPrice(),
-                        dealPojo.getRetailPrice(), dealPojo.getSavings());
-                deals.add(deal);
-            }
-        }
-
-        deals.forEach(System.out::println);
-
-        //Game
-
-        String keyword = "call of duty";
-        ArrayList<GamePojo> gamePojos = gamesFetcher.getGameContainingKeyword(keyword);
-        ArrayList<Game> games = new ArrayList<>();
-
-        for (GamePojo gamePojo : gamePojos) {
-            Game game = new Game(gamePojo.getTitle(), gamePojo.getSteamID(), gamePojo.getCheapestPrice());
-            games.add(game);
-        }
-
-        games.forEach(System.out::println);
+//        String keyword = "call of duty";
+//        ArrayList<GamePojo> gamePojos = gamesFetcher.getGameContainingKeyword(keyword);
+//        ArrayList<Game> games = new ArrayList<>();
+//
+//        for (GamePojo gamePojo : gamePojos) {
+//            Game game = new Game(gamePojo.getTitle(), gamePojo.getSteamID(), gamePojo.getCheapestPrice(),
+//                    gamePojo.getGameID());
+//            games.add(game);
+//        }
+//
+//        games.forEach(System.out::println);
 
         //Store
 
-//        storesFetcher.getAllShops();
+//   //     storesFetcher.getAllShops();
 
-        ArrayList<StoreAllPojo> storeAllPojos = storesFetcher.readAllShopsFromFile();
+//        ArrayList<StoreAllPojo> storeAllPojos = storesFetcher.readAllShopsFromFile();
+//
+//        ArrayList<Store> stores = new ArrayList<>();
+//
+//        for (StoreAllPojo storeAllPojo : storeAllPojos) {
+//            Store store = new Store(storeAllPojo.getId(), storeAllPojo.getName(), storeAllPojo.isActive());
+//            stores.add(store);
+//        }
+//
+//        stores.forEach(System.out::println);
 
-        ArrayList<Store> stores = new ArrayList<>();
+        // //GameLookup
 
-        for (StoreAllPojo storeAllPojo : storeAllPojos) {
-            Store store = new Store(storeAllPojo.getId(), storeAllPojo.getName(), storeAllPojo.isActive());
-            stores.add(store);
-        }
+//        GameLookup gameLookup = new GameLookup();
+//        String gameTitleForLookup = "lego batman";
+//        gameLookup.giveTitleToGetListOFDealsWithStores(gameTitleForLookup);
 
-        stores.forEach(System.out::println);
 
     }
+
 }
