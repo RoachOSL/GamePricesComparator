@@ -20,7 +20,6 @@ public class Game {
         this.steamID = steamID;
         this.cheapestPrice = cheapestPrice;
         this.gameID = gameID;
-
     }
 
 }

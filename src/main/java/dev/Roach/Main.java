@@ -1,5 +1,7 @@
 package dev.Roach;
 
+import dev.Roach.datamodel.game.Game;
+import dev.Roach.datamodel.game.GamePojo;
 import dev.Roach.datamodel.store.Store;
 import dev.Roach.datamodel.store.StoreAllPojo;
 import dev.Roach.fetchers.DealsFetcher;
@@ -58,7 +60,6 @@ public class Main {
         //Store
 //
 //        storesFetcher.getAllShops();
-//
 //        ArrayList<StoreAllPojo> storeAllPojos = storesFetcher.readAllShopsFromFile();
 //
 //        ArrayList<Store> stores = new ArrayList<>();
@@ -71,12 +72,24 @@ public class Main {
 //        stores.forEach(System.out::println);
 
         // //GameLookup
-
+//
 //        GameLookup gameLookup = new GameLookup();
 //        String gameTitleForLookup = "legobatman";
 //        gameLookup.giveTitleToGetListOFDealsWithStores(gameTitleForLookup);
 
-        System.out.println("test");
+        //Alerts
+
+        AlertService alertService = new AlertService(client);
+//
+//        System.out.println(alertService.createOrUpdateAlert("os1996@o2.pl",288, 18.00));
+//
+//        System.out.println(alertService.createOrUpdateAlert("os1996@o2.pl",612, 18.00));
+//
+//        System.out.println(alertService.deleteAlert("os1996@o2.pl",288));
+
+//        System.out.println(alertService.getAlertsForEmail("os1996@o2.pl"));
+
+        System.out.println(alertService.createOrUpdateAlertWithGameTitle("legobatman","os1996@o2.pl", 5.00));
 
     }
 

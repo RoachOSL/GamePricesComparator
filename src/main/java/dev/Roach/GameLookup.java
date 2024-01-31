@@ -24,7 +24,6 @@ public class GameLookup {
 
         ArrayList<GamePojo> gamePojos = gamesFetcher.getGameContainingKeyword(transformedGameTitle);
 
-
         int gameIdentificator = 0;
         boolean gameFound = false;
 
