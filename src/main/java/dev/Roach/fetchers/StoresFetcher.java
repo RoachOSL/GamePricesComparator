@@ -1,6 +1,7 @@
 package dev.Roach.fetchers;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.Roach.JSONMapper;
 import dev.Roach.datamodel.store.StoreAllPojo;
@@ -26,6 +27,7 @@ public class StoresFetcher {
     public ArrayList<StoreAllPojo> getAllShops() {
 
         JSONMapper jsonMapper = new JSONMapper();
+        ObjectMapper objectMapper = new ObjectMapper();
 
         try (FileWriter fw = new FileWriter("dataFromApi/ShopList.txt")) {
             HttpRequest request = HttpRequest.newBuilder()
@@ -36,6 +38,12 @@ public class StoresFetcher {
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
             fw.write(response.body());
+
+            JsonNode jsonResponse = objectMapper.readTree(response.body());
+
+            if (!jsonResponse.isArray()) {
+                return new ArrayList<>();
+            }
 
             return jsonMapper.mapArrayOfAllStoresToJava(response.body());
 
@@ -63,6 +71,5 @@ public class StoresFetcher {
             return new ArrayList<>();
         }
     }
-
 
 }

@@ -1,10 +1,13 @@
 package dev.Roach;
 
+import dev.Roach.datamodel.store.Store;
+import dev.Roach.datamodel.store.StoreAllPojo;
 import dev.Roach.fetchers.DealsFetcher;
 import dev.Roach.fetchers.GamesFetcher;
 import dev.Roach.fetchers.StoresFetcher;
 
 import java.net.http.HttpClient;
+import java.util.ArrayList;
 
 public class Main {
     public static void main(String[] args) {
@@ -53,9 +56,9 @@ public class Main {
 //        games.forEach(System.out::println);
 
         //Store
-
-//   //     storesFetcher.getAllShops();
-
+//
+//        storesFetcher.getAllShops();
+//
 //        ArrayList<StoreAllPojo> storeAllPojos = storesFetcher.readAllShopsFromFile();
 //
 //        ArrayList<Store> stores = new ArrayList<>();
@@ -70,7 +73,7 @@ public class Main {
         // //GameLookup
 
 //        GameLookup gameLookup = new GameLookup();
-//        String gameTitleForLookup = "lego batman";
+//        String gameTitleForLookup = "legobatman";
 //        gameLookup.giveTitleToGetListOFDealsWithStores(gameTitleForLookup);
 
     }

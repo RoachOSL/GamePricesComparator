@@ -12,26 +12,39 @@ public class GameLookup {
     HttpClient client = HttpClient.newBuilder().build();
     GamesFetcher gamesFetcher = new GamesFetcher(client);
 
+
     public void giveTitleToGetListOFDealsWithStores(String gameTitle) {
+
+        if (gameTitle == null || gameTitle.isEmpty()) {
+            System.out.println("Game title cannot be null or empty.");
+            return;
+        }
 
         String transformedGameTitle = gameTitle.toUpperCase().replaceAll("\\s", "");
 
         ArrayList<GamePojo> gamePojos = gamesFetcher.getGameContainingKeyword(transformedGameTitle);
 
-        int gameIdenficator = 0;
+
+        int gameIdentificator = 0;
+        boolean gameFound = false;
 
         for (GamePojo gamePojo : gamePojos) {
             Game game = new Game(gamePojo.getTitle(), gamePojo.getSteamID(), gamePojo.getCheapestPrice(),
                     gamePojo.getGameID());
             if (transformedGameTitle.equals(game.getTitle())) {
-                gameIdenficator = game.getGameID();
+                gameIdentificator = game.getGameID();
+                gameFound = true;
+                break;
             }
         }
 
-        GameDealResponse gameDeal = gamesFetcher.getGameDealObjectUsingID(gameIdenficator);
+        if (!gameFound) {
+            System.out.println("No exact match found for the title: " + gameTitle);
+            return;
+        }
+
+        GameDealResponse gameDeal = gamesFetcher.getGameDealObjectUsingID(gameIdentificator);
 
         System.out.println(gameDeal);
     }
-
-
 }
