@@ -77,6 +77,8 @@ public class Main {
         String gameTitleProper = "legobatman";
         System.out.println(gameLookup.giveTitleToGetListOFDealsWithStores(gameTitleProper));
 
+        System.out.println("test");
+
     }
 
 }
