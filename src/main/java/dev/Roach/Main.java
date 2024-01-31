@@ -1,34 +1,39 @@
 package dev.Roach;
 
+import dev.Roach.datamodel.game.Game;
+import dev.Roach.datamodel.game.GamePojo;
+import dev.Roach.datamodel.store.Store;
+import dev.Roach.datamodel.store.StoreAllPojo;
 import dev.Roach.fetchers.DealsFetcher;
 import dev.Roach.fetchers.GamesFetcher;
 import dev.Roach.fetchers.StoresFetcher;
 
+import java.net.http.HttpClient;
+import java.util.ArrayList;
+
 public class Main {
     public static void main(String[] args) {
 
-        DealsFetcher dealsFetcher = new DealsFetcher();
+        var client = HttpClient.newBuilder().build();
 
-        GamesFetcher gamesFetcher = new GamesFetcher();
+        DealsFetcher dealsFetcher = new DealsFetcher(client);
 
-        StoresFetcher storesFetcher = new StoresFetcher();
+        GamesFetcher gamesFetcher = new GamesFetcher(client);
+
+        StoresFetcher storesFetcher = new StoresFetcher(client);
 
         JSONMapper jsonMapper = new JSONMapper();
 
-        //CheckForLimit
+       // //Deals
+
+// //       ArrayList<DealAllListPojo> dealAllListPojosFetch = dealsFetcher.getAllDeals();
 //
-//        System.out.println(gamesFetcher.getGameUsingID(612));
-
-        //Deals
-
-//   //     List<DealAllListPojo> dealAllListPojosFetch = dealsFetcher.getAllDeals();
-
-//        List<DealAllListPojo> dealAllListPojosFromTheFile = dealsFetcher.readAllDealsFromFile();
+//        ArrayList<DealAllListPojo> dealAllListPojosFromTheFile = dealsFetcher.readAllDealsFromFile();
 //
 //        ArrayList<Deal> deals = new ArrayList<>();
 //
 //        for (DealAllListPojo dealAllListPojo : dealAllListPojosFromTheFile) {
-//            List<DealAllPojo> dealAllPojos = dealAllListPojo.getDeals();
+//            ArrayList<DealAllPojo> dealAllPojos = dealAllListPojo.getDeals();
 //            for (DealAllPojo dealPojo : dealAllPojos) {
 //                Deal deal = new Deal(dealPojo.getStoreID(), dealPojo.getDealID(), dealPojo.getPrice(),
 //                        dealPojo.getRetailPrice(), dealPojo.getSavings());
@@ -38,10 +43,10 @@ public class Main {
 //
 //        deals.forEach(System.out::println);
 
-//        Game
-//
-//        String keyword = "diablo 4";
-//        List<GamePojo> gamePojos = gamesFetcher.getGameContainingKeyword(keyword);
+//        //Game
+
+//        String keyword = "call of duty";
+//        ArrayList<GamePojo> gamePojos = gamesFetcher.getGameContainingKeyword(keyword);
 //        ArrayList<Game> games = new ArrayList<>();
 //
 //        for (GamePojo gamePojo : gamePojos) {
@@ -52,11 +57,10 @@ public class Main {
 //
 //        games.forEach(System.out::println);
 
-//        Stores
-
-//        storesFetcher.getAllShops();
+        //Store
 //
-//        List<StoreAllPojo> storeAllPojos = storesFetcher.readAllShopsFromFile();
+//        storesFetcher.getAllShops();
+//        ArrayList<StoreAllPojo> storeAllPojos = storesFetcher.readAllShopsFromFile();
 //
 //        ArrayList<Store> stores = new ArrayList<>();
 //
@@ -67,17 +71,25 @@ public class Main {
 //
 //        stores.forEach(System.out::println);
 
-//        //GameLookup
+        // //GameLookup
+//
+//        GameLookup gameLookup = new GameLookup();
+//        String gameTitleForLookup = "legobatman";
+//        gameLookup.giveTitleToGetListOFDealsWithStores(gameTitleForLookup);
 
-        GameLookup gameLookup = new GameLookup();
-//        String gameTitleWrong = "gagaga";
-//        gameLookup.giveTitleToGetListOFDealsWithStores(gameTitleWrong);
+        //Alerts
 
-//        Proper title:
-        String gameTitleProper = "legobatman";
-        System.out.println(gameLookup.giveTitleToGetListOFDealsWithStores(gameTitleProper));
+        AlertService alertService = new AlertService(client);
+//
+//        System.out.println(alertService.createOrUpdateAlert("os1996@o2.pl",288, 18.00));
+//
+//        System.out.println(alertService.createOrUpdateAlert("os1996@o2.pl",612, 18.00));
+//
+//        System.out.println(alertService.deleteAlert("os1996@o2.pl",288));
 
-        System.out.println("test");
+//        System.out.println(alertService.getAlertsForEmail("os1996@o2.pl"));
+
+        System.out.println(alertService.createOrUpdateAlertWithGameTitle("legobatman","os1996@o2.pl", 5.00));
 
     }
 
