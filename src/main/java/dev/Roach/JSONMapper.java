@@ -17,7 +17,7 @@ public class JSONMapper {
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
 
-    public ArrayList<GamePojo> mapArrayOfGamePojoToJava(String json) {
+      public ArrayList<GamePojo> mapArrayOfGamePojoToJava(String json) {
         try {
             return objectMapper.readValue(json, new TypeReference<ArrayList<GamePojo>>() {
             });
@@ -51,6 +51,4 @@ public class JSONMapper {
             throw new RuntimeException(e);
         }
     }
-
-
 }
