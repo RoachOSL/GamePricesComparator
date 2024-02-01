@@ -2,8 +2,11 @@ package fetchers;
 
 import dev.Roach.datamodel.game.GamePojo;
 import dev.Roach.fetchers.GamesFetcher;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -11,7 +14,7 @@ import java.io.IOException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
@@ -21,21 +24,29 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class GamesFetcherTest {
 
-    private final HttpClient mockClient = Mockito.mock(HttpClient.class);
-    private final GamesFetcher mockitoGamesFetcher = new GamesFetcher(mockClient);
+    @Mock
+    private HttpClient mockClient;
+
+    @InjectMocks
+    private GamesFetcher gamesFetcher;
+
+    @BeforeEach
+    public void setUp() {
+        gamesFetcher = new GamesFetcher();
+        gamesFetcher.setClient(mockClient);
+    }
 
     @Test
     public void getGameContainingKeywordResponseForValidKeyword() throws IOException, InterruptedException {
 
         String keyword = "gameTest";
-
         HttpResponse<String> mockResponse = Mockito.mock(HttpResponse.class);
 
         when(mockResponse.body()).thenReturn("[{\"steamAppID\":\"testID\"}]");
         when(mockClient.send(any(HttpRequest.class), any(HttpResponse.BodyHandler.class)))
                 .thenReturn(mockResponse);
 
-        ArrayList<GamePojo> result = mockitoGamesFetcher.getGameContainingKeyword(keyword);
+        List<GamePojo> result = gamesFetcher.getGameContainingKeyword(keyword);
 
         assertEquals("testID", result.getFirst().getSteamID());
     }
@@ -44,7 +55,7 @@ class GamesFetcherTest {
     public void getGameContainsNullAsKeyword() {
 
         try {
-            mockitoGamesFetcher.getGameContainingKeyword(null);
+            gamesFetcher.getGameContainingKeyword(null);
         } catch (NullPointerException e) {
             assertEquals("Keyword can't be a null", e.getMessage());
         }
@@ -61,7 +72,7 @@ class GamesFetcherTest {
         when(mockClient.send(any(HttpRequest.class), any(HttpResponse.BodyHandler.class)))
                 .thenReturn(mockResponse);
 
-        String testResult = mockitoGamesFetcher.getGameUsingID(testID);
+        String testResult = gamesFetcher.getGameUsingID(testID);
 
         assertEquals("Test for valid ID", testResult);
     }
@@ -77,7 +88,7 @@ class GamesFetcherTest {
         when(mockClient.send(any(HttpRequest.class), any(HttpResponse.BodyHandler.class)))
                 .thenReturn(mockitoResponse);
 
-        String result = mockitoGamesFetcher.getGameUsingID(id);
+        String result = gamesFetcher.getGameUsingID(id);
 
         assertEquals("Wrong ID, game doesn't exist", result);
     }

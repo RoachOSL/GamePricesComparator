@@ -1,37 +1,34 @@
 package dev.Roach;
 
-import dev.Roach.datamodel.store.Store;
-import dev.Roach.datamodel.store.StoreAllPojo;
 import dev.Roach.fetchers.DealsFetcher;
 import dev.Roach.fetchers.GamesFetcher;
 import dev.Roach.fetchers.StoresFetcher;
 
-import java.net.http.HttpClient;
-import java.util.ArrayList;
-
 public class Main {
     public static void main(String[] args) {
 
-        var client = HttpClient.newBuilder().build();
+        DealsFetcher dealsFetcher = new DealsFetcher();
 
-        DealsFetcher dealsFetcher = new DealsFetcher(client);
+        GamesFetcher gamesFetcher = new GamesFetcher();
 
-        GamesFetcher gamesFetcher = new GamesFetcher(client);
-
-        StoresFetcher storesFetcher = new StoresFetcher(client);
+        StoresFetcher storesFetcher = new StoresFetcher();
 
         JSONMapper jsonMapper = new JSONMapper();
 
-       // //Deals
-
-// //       ArrayList<DealAllListPojo> dealAllListPojosFetch = dealsFetcher.getAllDeals();
+        //CheckForLimit
 //
-//        ArrayList<DealAllListPojo> dealAllListPojosFromTheFile = dealsFetcher.readAllDealsFromFile();
+//        System.out.println(gamesFetcher.getGameUsingID(612));
+
+        //Deals
+
+//   //     List<DealAllListPojo> dealAllListPojosFetch = dealsFetcher.getAllDeals();
+
+//        List<DealAllListPojo> dealAllListPojosFromTheFile = dealsFetcher.readAllDealsFromFile();
 //
 //        ArrayList<Deal> deals = new ArrayList<>();
 //
 //        for (DealAllListPojo dealAllListPojo : dealAllListPojosFromTheFile) {
-//            ArrayList<DealAllPojo> dealAllPojos = dealAllListPojo.getDeals();
+//            List<DealAllPojo> dealAllPojos = dealAllListPojo.getDeals();
 //            for (DealAllPojo dealPojo : dealAllPojos) {
 //                Deal deal = new Deal(dealPojo.getStoreID(), dealPojo.getDealID(), dealPojo.getPrice(),
 //                        dealPojo.getRetailPrice(), dealPojo.getSavings());
@@ -41,10 +38,10 @@ public class Main {
 //
 //        deals.forEach(System.out::println);
 
-//        //Game
-
-//        String keyword = "call of duty";
-//        ArrayList<GamePojo> gamePojos = gamesFetcher.getGameContainingKeyword(keyword);
+//        Game
+//
+//        String keyword = "diablo 4";
+//        List<GamePojo> gamePojos = gamesFetcher.getGameContainingKeyword(keyword);
 //        ArrayList<Game> games = new ArrayList<>();
 //
 //        for (GamePojo gamePojo : gamePojos) {
@@ -55,11 +52,11 @@ public class Main {
 //
 //        games.forEach(System.out::println);
 
-        //Store
-//
+//        Stores
+
 //        storesFetcher.getAllShops();
 //
-//        ArrayList<StoreAllPojo> storeAllPojos = storesFetcher.readAllShopsFromFile();
+//        List<StoreAllPojo> storeAllPojos = storesFetcher.readAllShopsFromFile();
 //
 //        ArrayList<Store> stores = new ArrayList<>();
 //
@@ -70,11 +67,15 @@ public class Main {
 //
 //        stores.forEach(System.out::println);
 
-        // //GameLookup
+//        //GameLookup
 
 //        GameLookup gameLookup = new GameLookup();
-//        String gameTitleForLookup = "legobatman";
-//        gameLookup.giveTitleToGetListOFDealsWithStores(gameTitleForLookup);
+//        String gameTitleWrong = "gagaga";
+//        gameLookup.giveTitleToGetListOFDealsWithStores(gameTitleWrong);
+//
+//        //Proper title:
+//        String gameTitleProper = "legobatman";
+//        System.out.println(gameLookup.giveTitleToGetListOFDealsWithStores(gameTitleProper));
 
     }
 
