@@ -1,86 +1,81 @@
 import dev.Roach.GameLookup;
-import org.junit.jupiter.api.AfterEach;
+import dev.Roach.datamodel.game.GamePojo;
+import dev.Roach.datamodel.gameLookup.GameDealResponse;
+import dev.Roach.datamodel.gameLookup.GameInfo;
+import dev.Roach.fetchers.GamesFetcher;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 
-
-import static org.junit.jupiter.api.Assertions.assertTrue;
-
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.mockito.ArgumentMatchers.anyInt;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class GameLookupTest {
 
-    private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-    private final PrintStream originalOut = System.out;
+    @Mock
+    private GamesFetcher mockGamesFetcher;
+
+    private GameLookup gameLookup;
 
     @BeforeEach
-    public void setUpStreams() {
-        System.setOut(new PrintStream(outContent));
-    }
-
-    @AfterEach
-    public void restoreStreams() {
-        System.setOut(originalOut);
+    void setUp() {
+        gameLookup = new GameLookup();
+        gameLookup.setGamesFetcher(mockGamesFetcher);
     }
 
     @Test
     public void testGiveTitleToGetListOFDealsWithStoresWithValidTitle() {
-        GameLookup gameLookup = new GameLookup();
 
-        String validTitle = "callofdutyblackops";
+        String keyword = "legobatman";
+        String transformedGameTitle = keyword.toUpperCase().replaceAll("\\s", "");
 
-        gameLookup.giveTitleToGetListOFDealsWithStores(validTitle);
+        GamePojo testGamePojo = new GamePojo();
+        testGamePojo.setTitle(transformedGameTitle);
 
-        String output = outContent.toString();
+        List<GamePojo> mockGamePojoList = new ArrayList<>();
+        mockGamePojoList.add(testGamePojo);
 
-        assertTrue(output.contains("""
-                Game: Call of Duty: Black Ops
-                Cheapest Price Ever: 19.59
-                                
-                Deals:
-                Store ID: 1
-                Deal ID: BAUTek6nS3H6PqyM4miWzmLpbZ6rkPEgk8Jue2Ji8IY%3D
-                Price: 39.99
-                Retail Price: 39.99
-                Savings: 0.000000           
-                """));
+        when(mockGamesFetcher.getGameContainingKeyword(transformedGameTitle)).thenReturn(mockGamePojoList);
+
+        GameDealResponse mockResponse = new GameDealResponse();
+
+        GameInfo mockInfo = new GameInfo();
+        mockInfo.setTitle("LEGO Batman");
+        mockResponse.setInfo(mockInfo);
+        when(mockGamesFetcher.getGameDealObjectUsingID(anyInt())).thenReturn(mockResponse);
+
+        GameDealResponse result = gameLookup.giveTitleToGetListOFDealsWithStores(transformedGameTitle);
+
+        assertEquals("LEGO Batman", result.getInfo().getTitle());
     }
 
     @Test
-    public void testGiveTitleToGetListOFDealsWithStoresWithNullOrEmptyTitle() {
+    public void testGiveTitleToGetListOFDealsWithStoresWithInvalidTitle() {
 
-        GameLookup gameLookup = new GameLookup();
-
-        gameLookup.giveTitleToGetListOFDealsWithStores(null);
-
-        String output = outContent.toString();
-
-        assertTrue(output.contains("Game title cannot be null or empty."));
-
-        gameLookup.giveTitleToGetListOFDealsWithStores("");
-
-        String outputOfEmptyTitle = outContent.toString();
-
-        assertTrue(outputOfEmptyTitle.contains("Game title cannot be null or empty."));
+        String keyword = "InvalidTitle";
+        when(mockGamesFetcher.getGameContainingKeyword(keyword.toUpperCase().replaceAll("\\s", ""))).thenReturn(new ArrayList<>());
+        GameDealResponse result = gameLookup.giveTitleToGetListOFDealsWithStores(keyword);
+        assertNotNull(result);
     }
 
     @Test
-    public void testGiveTitleToGetListOFDealsWithStoresWithIncorrectTitle() {
+    public void testWithNullTitle() {
+        GameDealResponse result = gameLookup.giveTitleToGetListOFDealsWithStores(null);
+        assertNotNull(result);
+    }
 
-        GameLookup gameLookup = new GameLookup();
-
-        gameLookup.giveTitleToGetListOFDealsWithStores("randomTitle");
-
-        String output = outContent.toString();
-
-        assertTrue(output.contains("No exact match found for the title: randomTitle"));
+    @Test
+    public void testWithEmptyTitle() {
+        GameDealResponse result = gameLookup.giveTitleToGetListOFDealsWithStores("");
+        assertNotNull(result);
     }
 
 }
-
-

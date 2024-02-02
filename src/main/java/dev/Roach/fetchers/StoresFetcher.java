@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.Roach.JSONMapper;
 import dev.Roach.datamodel.store.StoreAllPojo;
+import lombok.Setter;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -16,22 +17,24 @@ import java.net.http.HttpResponse;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
+@Setter
 public class StoresFetcher {
-    private final HttpClient client;
 
-    public StoresFetcher(HttpClient client) {
-        this.client = client;
-    }
+    private HttpClient client = HttpClient.newBuilder().build();
+    private final ObjectMapper objectMapper = new ObjectMapper();
+    private static final String storesApiUrl = "https://www.cheapshark.com/api/1.0/stores";
+    private static final String filePathToStores = "dataFromApi/ShopList.txt";
 
-    public ArrayList<StoreAllPojo> getAllShops() {
+    public List<StoreAllPojo> getAllShops() {
 
         JSONMapper jsonMapper = new JSONMapper();
-        ObjectMapper objectMapper = new ObjectMapper();
 
-        try (FileWriter fw = new FileWriter("dataFromApi/ShopList.txt")) {
+        try (FileWriter fw = new FileWriter(filePathToStores)) {
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create("https://www.cheapshark.com/api/1.0/stores"))
+                    .uri(URI.create(storesApiUrl))
                     .GET()
                     .build();
 
@@ -47,28 +50,25 @@ public class StoresFetcher {
 
             return jsonMapper.mapArrayOfAllStoresToJava(response.body());
 
-        } catch (InterruptedException | IOException exception) {
-            exception.printStackTrace();
-            return new ArrayList<>();
+        } catch (InterruptedException | IOException e) {
+            e.printStackTrace();
+            return Collections.emptyList();
         }
     }
 
-    public ArrayList<StoreAllPojo> readAllShopsFromFile() {
-
-        String filePath = "dataFromApi/ShopList.txt";
-        ObjectMapper objectMapper = new ObjectMapper();
+    public List<StoreAllPojo> readAllShopsFromFile() {
 
         try {
-            if (new File(filePath).exists()) {
-                String json = new String(Files.readAllBytes(Paths.get(filePath)));
+            if (new File(filePathToStores).exists()) {
+                String json = new String(Files.readAllBytes(Paths.get(filePathToStores)));
                 return objectMapper.readValue(json, new TypeReference<ArrayList<StoreAllPojo>>() {
                 });
             } else {
-                return new ArrayList<>();
+                return Collections.emptyList();
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return new ArrayList<>();
+            return Collections.emptyList();
         }
     }
 

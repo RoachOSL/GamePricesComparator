@@ -3,19 +3,20 @@ package dev.Roach;
 import dev.Roach.datamodel.game.Game;
 import dev.Roach.datamodel.game.GamePojo;
 import dev.Roach.fetchers.GamesFetcher;
+import lombok.Setter;
 
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.ArrayList;
+import java.util.List;
 
+@Setter
 public class AlertService {
-    private final HttpClient httpClient;
 
-    public AlertService(HttpClient httpClient) {
-        this.httpClient = httpClient;
-    }
+    private HttpClient httpClient = HttpClient.newBuilder().build();
+
+    private GamesFetcher gamesFetcher = new GamesFetcher();
 
     public boolean createOrUpdateAlert(String email, int gameID, double price) {
         String url = String.format("https://www.cheapshark.com/api/1.0/alerts?action=set&email=%s&gameID=%d&price=%.2f",
@@ -60,13 +61,9 @@ public class AlertService {
 
     public boolean createOrUpdateAlertWithGameTitle(String gameTitle, String email, double price) {
 
-        HttpClient client = HttpClient.newBuilder().build();
-
-        GamesFetcher gamesFetcher = new GamesFetcher(client);
-
         String transformedGameTitle = gameTitle.toUpperCase().replaceAll("\\s", "");
 
-        ArrayList<GamePojo> gamePojos = gamesFetcher.getGameContainingKeyword(transformedGameTitle);
+        List<GamePojo> gamePojos = gamesFetcher.getGameContainingKeyword(transformedGameTitle);
 
         int gameID = 0;
 
@@ -77,8 +74,6 @@ public class AlertService {
                 gameID = game.getGameID();
             }
         }
-
-        System.out.println(gameID);
 
         String url = String.format("https://www.cheapshark.com/api/1.0/alerts?action=set&email=%s&gameID=%d&price=%.2f",
                 email, gameID, price);

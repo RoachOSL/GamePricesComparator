@@ -10,14 +10,14 @@ import dev.Roach.datamodel.gameLookup.GameDealResponse;
 import dev.Roach.datamodel.store.StoreAllPojo;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class JSONMapper {
 
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
-
-      public ArrayList<GamePojo> mapArrayOfGamePojoToJava(String json) {
+    public List<GamePojo> mapArrayOfGamePojoToJava(String json) {
         try {
             return objectMapper.readValue(json, new TypeReference<ArrayList<GamePojo>>() {
             });
@@ -26,7 +26,7 @@ public class JSONMapper {
         }
     }
 
-    public ArrayList<DealAllPojo> mapArrayOfDealsToJava(String json) {
+    public List<DealAllPojo> mapArrayOfDealsToJava(String json) {
         try {
             return objectMapper.readValue(json, new TypeReference<ArrayList<DealAllPojo>>() {
             });
@@ -35,7 +35,7 @@ public class JSONMapper {
         }
     }
 
-    public ArrayList<StoreAllPojo> mapArrayOfAllStoresToJava(String json) {
+    public List<StoreAllPojo> mapArrayOfAllStoresToJava(String json) {
         try {
             return objectMapper.readValue(json, new TypeReference<ArrayList<StoreAllPojo>>() {
             });

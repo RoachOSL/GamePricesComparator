@@ -113,7 +113,7 @@ public class JSONMapperTest {
 
         when(mockJsonMapper.mapArrayOfDealsToJava(json)).thenReturn(dealAllPojoTestingArray);
 
-        ArrayList<DealAllPojo> result = mockJsonMapper.mapArrayOfDealsToJava(json);
+        List<DealAllPojo> result = mockJsonMapper.mapArrayOfDealsToJava(json);
 
         assertEquals(1, result.size());
         assertEquals("Game Internal Name 1", result.getFirst().getInternalName());
@@ -131,7 +131,7 @@ public class JSONMapperTest {
         ArrayList<DealAllPojo> expectedResult = new ArrayList<>();
         when(mockJsonMapper.mapArrayOfDealsToJava(json)).thenReturn(expectedResult);
 
-        ArrayList<DealAllPojo> result = mockJsonMapper.mapArrayOfDealsToJava(json);
+        List<DealAllPojo> result = mockJsonMapper.mapArrayOfDealsToJava(json);
 
         assertTrue(result.isEmpty());
     }
@@ -182,7 +182,7 @@ public class JSONMapperTest {
 
         when(mockJsonMapper.mapArrayOfAllStoresToJava(json)).thenReturn(storeAllPojoTestingArray);
 
-        ArrayList<StoreAllPojo> result = mockJsonMapper.mapArrayOfAllStoresToJava(json);
+        List<StoreAllPojo> result = mockJsonMapper.mapArrayOfAllStoresToJava(json);
 
         assertEquals(2, storeAllPojoTestingArray.size());
 
@@ -203,7 +203,7 @@ public class JSONMapperTest {
         ArrayList<StoreAllPojo> expectedResult = new ArrayList<>();
         when(mockJsonMapper.mapArrayOfAllStoresToJava(json)).thenReturn(expectedResult);
 
-        ArrayList<StoreAllPojo> result = mockJsonMapper.mapArrayOfAllStoresToJava(json);
+        List<StoreAllPojo> result = mockJsonMapper.mapArrayOfAllStoresToJava(json);
 
         assertTrue(result.isEmpty());
     }
@@ -318,4 +318,3 @@ public class JSONMapperTest {
         assertEquals(expectedResult, result);
     }
 }
-

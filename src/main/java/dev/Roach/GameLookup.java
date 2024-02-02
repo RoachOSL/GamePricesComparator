@@ -4,46 +4,44 @@ import dev.Roach.datamodel.game.Game;
 import dev.Roach.datamodel.game.GamePojo;
 import dev.Roach.datamodel.gameLookup.GameDealResponse;
 import dev.Roach.fetchers.GamesFetcher;
+import lombok.Setter;
 
-import java.net.http.HttpClient;
-import java.util.ArrayList;
+import java.util.List;
 
+@Setter
 public class GameLookup {
-    HttpClient client = HttpClient.newBuilder().build();
-    GamesFetcher gamesFetcher = new GamesFetcher(client);
 
+    private GamesFetcher gamesFetcher = new GamesFetcher();
 
-    public void giveTitleToGetListOFDealsWithStores(String gameTitle) {
+    public GameDealResponse giveTitleToGetListOFDealsWithStores(String gameTitle) {
 
         if (gameTitle == null || gameTitle.isEmpty()) {
             System.out.println("Game title cannot be null or empty.");
-            return;
+            return new GameDealResponse();
         }
 
         String transformedGameTitle = gameTitle.toUpperCase().replaceAll("\\s", "");
 
-        ArrayList<GamePojo> gamePojos = gamesFetcher.getGameContainingKeyword(transformedGameTitle);
+        List<GamePojo> gamePojos = gamesFetcher.getGameContainingKeyword(transformedGameTitle);
 
         int gameIdentificator = 0;
-        boolean gameFound = false;
+        boolean foundGame = false;
 
         for (GamePojo gamePojo : gamePojos) {
             Game game = new Game(gamePojo.getTitle(), gamePojo.getSteamID(), gamePojo.getCheapestPrice(),
                     gamePojo.getGameID());
             if (transformedGameTitle.equals(game.getTitle())) {
                 gameIdentificator = game.getGameID();
-                gameFound = true;
+                foundGame = true;
                 break;
             }
         }
 
-        if (!gameFound) {
-            System.out.println("No exact match found for the title: " + gameTitle);
-            return;
+        if (!foundGame) {
+            System.out.println("No matches found for the title: " + gameTitle);
+            return new GameDealResponse();
         }
 
-        GameDealResponse gameDeal = gamesFetcher.getGameDealObjectUsingID(gameIdentificator);
-
-        System.out.println(gameDeal);
+        return gamesFetcher.getGameDealObjectUsingID(gameIdentificator);
     }
 }

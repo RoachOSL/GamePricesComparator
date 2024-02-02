@@ -5,18 +5,18 @@ import lombok.Setter;
 import lombok.ToString;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
 @ToString
 public class DealAllListPojo {
-    private ArrayList<DealAllPojo> deals;
+    private List<DealAllPojo> deals;
 
     public DealAllListPojo() {
     }
 
-    public DealAllListPojo(ArrayList<DealAllPojo> deals) {
+    public DealAllListPojo(List<DealAllPojo> deals) {
         this.deals = deals;
     }
 }
-
