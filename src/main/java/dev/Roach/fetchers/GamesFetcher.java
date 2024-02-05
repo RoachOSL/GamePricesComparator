@@ -20,7 +20,7 @@ public class GamesFetcher {
 
     private HttpClient client = HttpClient.newBuilder().build();
     private final JSONMapper jsonMapper = new JSONMapper();
-    private static final String gamesApiUrl = "https://www.cheapshark.com/api/1.0/games?";
+    private static final String GAMES_API_URL = "https://www.cheapshark.com/api/1.0/games?";
 
     public List<GamePojo> getGameContainingKeyword(String keyword) {
 
@@ -32,7 +32,7 @@ public class GamesFetcher {
             String encodedKeyword = URLEncoder.encode(keyword, StandardCharsets.UTF_8);
 
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(gamesApiUrl + "title=" + encodedKeyword))
+                    .uri(URI.create(GAMES_API_URL + "title=" + encodedKeyword))
                     .GET()
                     .build();
 
@@ -49,7 +49,7 @@ public class GamesFetcher {
     public String getGameUsingID(int id) {
         try {
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(gamesApiUrl + "id=" + id))
+                    .uri(URI.create(GAMES_API_URL + "id=" + id))
                     .GET()
                     .build();
 
@@ -73,7 +73,7 @@ public class GamesFetcher {
 
         try {
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(gamesApiUrl + "id=" + id))
+                    .uri(URI.create(GAMES_API_URL + "id=" + id))
                     .GET()
                     .build();
 

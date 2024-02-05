@@ -33,4 +33,10 @@ public class GameDealResponse {
 
         return sb.toString();
     }
+
+    public boolean isEmpty() {
+        return (info == null || info.getTitle() == null || info.getTitle().isEmpty())
+                && (cheapestPriceEver == null || cheapestPriceEver.getPrice().isEmpty())
+                && (deals == null || deals.isEmpty());
+    }
 }

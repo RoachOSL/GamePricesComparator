@@ -69,13 +69,13 @@ public class Main {
 
 //        //GameLookup
 
-//        GameLookup gameLookup = new GameLookup();
+        GameLookup gameLookup = new GameLookup();
 //        String gameTitleWrong = "gagaga";
 //        gameLookup.giveTitleToGetListOFDealsWithStores(gameTitleWrong);
-//
-//        //Proper title:
-//        String gameTitleProper = "legobatman";
-//        System.out.println(gameLookup.giveTitleToGetListOFDealsWithStores(gameTitleProper));
+
+//        Proper title:
+        String gameTitleProper = "legobatman";
+        System.out.println(gameLookup.giveTitleToGetListOFDealsWithStores(gameTitleProper));
 
     }
 

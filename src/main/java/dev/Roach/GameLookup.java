@@ -7,6 +7,7 @@ import dev.Roach.fetchers.GamesFetcher;
 import lombok.Setter;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 @Setter
 public class GameLookup {
@@ -16,8 +17,7 @@ public class GameLookup {
     public GameDealResponse giveTitleToGetListOFDealsWithStores(String gameTitle) {
 
         if (gameTitle == null || gameTitle.isEmpty()) {
-            System.out.println("Game title cannot be null or empty.");
-            return new GameDealResponse();
+            throw new NoSuchElementException("Game title cannot be null or empty.");
         }
 
         String transformedGameTitle = gameTitle.toUpperCase().replaceAll("\\s", "");
@@ -38,10 +38,15 @@ public class GameLookup {
         }
 
         if (!foundGame) {
-            System.out.println("No matches found for the title: " + gameTitle);
-            return new GameDealResponse();
+            throw new NoSuchElementException("No game deals found for the title: " + gameTitle);
         }
 
-        return gamesFetcher.getGameDealObjectUsingID(gameIdentificator);
+        GameDealResponse response = gamesFetcher.getGameDealObjectUsingID(gameIdentificator);
+
+        if (response.isEmpty()) {
+            throw new NoSuchElementException("GameDealResponse is empty for game ID: " + gameIdentificator);
+        }
+
+        return response;
     }
 }

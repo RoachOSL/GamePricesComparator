@@ -25,8 +25,8 @@ public class DealsFetcher {
 
     private HttpClient client = HttpClient.newBuilder().build();
     private final ObjectMapper objectMapper = new ObjectMapper();
-    private static final String dealsApiUrl = "https://www.cheapshark.com/api/1.0/deals?";
-    private static final String filePathToAllDeals = "dataFromApi/AllDealsList.txt";
+    private static final String DEALS_API_URL = "https://www.cheapshark.com/api/1.0/deals?";
+    private static final String FILE_PATH_TO_ALL_DEALS = "dataFromApi/AllDealsList.txt";
 
 
     public List<DealAllListPojo> getAllDeals() {
@@ -35,7 +35,7 @@ public class DealsFetcher {
         JSONMapper jsonMapper = new JSONMapper();
 
         HttpRequest initialRequest = HttpRequest.newBuilder()
-                .uri(URI.create(dealsApiUrl + "pageNumber=0"))
+                .uri(URI.create(DEALS_API_URL + "pageNumber=0"))
                 .GET()
                 .build();
         try {
@@ -48,7 +48,7 @@ public class DealsFetcher {
             for (int i = 0; i < totalPages; i++) {
 
                 HttpRequest request = HttpRequest.newBuilder()
-                        .uri(URI.create(String.format(dealsApiUrl + "maxAge=%d&pageNumber=%d"
+                        .uri(URI.create(String.format(DEALS_API_URL + "maxAge=%d&pageNumber=%d"
                                 , maxAgeDealUptimeInHours, i)))
                         .GET()
                         .build();
@@ -64,7 +64,7 @@ public class DealsFetcher {
 
             String json = objectMapper.writeValueAsString(allPages);
 
-            try (FileWriter fw = new FileWriter(filePathToAllDeals)) {
+            try (FileWriter fw = new FileWriter(FILE_PATH_TO_ALL_DEALS)) {
                 fw.write(json);
             }
 
@@ -84,7 +84,7 @@ public class DealsFetcher {
 
         try {
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(dealsApiUrl + "id=" + id))
+                    .uri(URI.create(DEALS_API_URL + "id=" + id))
                     .GET()
                     .build();
 
@@ -101,8 +101,8 @@ public class DealsFetcher {
     public List<DealAllListPojo> readAllDealsFromFile() {
 
         try {
-            if (new File(filePathToAllDeals).exists()) {
-                String json = new String(Files.readAllBytes(Paths.get(filePathToAllDeals)));
+            if (new File(FILE_PATH_TO_ALL_DEALS).exists()) {
+                String json = new String(Files.readAllBytes(Paths.get(FILE_PATH_TO_ALL_DEALS)));
                 return objectMapper.readValue(json, new TypeReference<ArrayList<DealAllListPojo>>() {
                 });
             } else {

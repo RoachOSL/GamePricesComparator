@@ -25,16 +25,16 @@ public class StoresFetcher {
 
     private HttpClient client = HttpClient.newBuilder().build();
     private final ObjectMapper objectMapper = new ObjectMapper();
-    private static final String storesApiUrl = "https://www.cheapshark.com/api/1.0/stores";
-    private static final String filePathToStores = "dataFromApi/ShopList.txt";
+    private static final String STORES_API_URL = "https://www.cheapshark.com/api/1.0/stores";
+    private static final String FILE_PATH_TO_STORES = "dataFromApi/ShopList.txt";
 
     public List<StoreAllPojo> getAllShops() {
 
         JSONMapper jsonMapper = new JSONMapper();
 
-        try (FileWriter fw = new FileWriter(filePathToStores)) {
+        try (FileWriter fw = new FileWriter(FILE_PATH_TO_STORES)) {
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(storesApiUrl))
+                    .uri(URI.create(STORES_API_URL))
                     .GET()
                     .build();
 
@@ -59,8 +59,8 @@ public class StoresFetcher {
     public List<StoreAllPojo> readAllShopsFromFile() {
 
         try {
-            if (new File(filePathToStores).exists()) {
-                String json = new String(Files.readAllBytes(Paths.get(filePathToStores)));
+            if (new File(FILE_PATH_TO_STORES).exists()) {
+                String json = new String(Files.readAllBytes(Paths.get(FILE_PATH_TO_STORES)));
                 return objectMapper.readValue(json, new TypeReference<ArrayList<StoreAllPojo>>() {
                 });
             } else {
