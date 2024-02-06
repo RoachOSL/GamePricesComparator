@@ -37,7 +37,6 @@ public class DealsFetcher {
                 .uri(URI.create(DEALS_API_URL + "pageNumber=0"))
                 .GET()
                 .build();
-
         try {
 
             HttpResponse<String> initialResponse = client.send(initialRequest, HttpResponse.BodyHandlers.ofString());
@@ -99,7 +98,6 @@ public class DealsFetcher {
     }
 
     public List<DealAllListPojo> readAllDealsFromFile() {
-        String filePath = "dataFromApi/AllDealsList.txt";
 
         try {
             if (new File(FILE_PATH_TO_ALL_DEALS).exists()) {
@@ -109,7 +107,7 @@ public class DealsFetcher {
             } else {
                 return Collections.emptyList();
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
             return Collections.emptyList();
         }
