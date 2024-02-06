@@ -35,7 +35,7 @@ public class JSONMapper {
         }
     }
 
-    public List<StoreAllPojo> mapArrayOfAllStoresToJava(String json) {
+    public ArrayList<StoreAllPojo> mapArrayOfAllStoresToJava(String json) {
         try {
             return objectMapper.readValue(json, new TypeReference<ArrayList<StoreAllPojo>>() {
             });

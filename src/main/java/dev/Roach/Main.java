@@ -1,26 +1,17 @@
 package dev.Roach;
 
-import dev.Roach.datamodel.game.Game;
-import dev.Roach.datamodel.game.GamePojo;
-import dev.Roach.datamodel.store.Store;
-import dev.Roach.datamodel.store.StoreAllPojo;
 import dev.Roach.fetchers.DealsFetcher;
 import dev.Roach.fetchers.GamesFetcher;
 import dev.Roach.fetchers.StoresFetcher;
 
-import java.net.http.HttpClient;
-import java.util.ArrayList;
-
 public class Main {
     public static void main(String[] args) {
 
-        var client = HttpClient.newBuilder().build();
+        DealsFetcher dealsFetcher = new DealsFetcher();
 
-        DealsFetcher dealsFetcher = new DealsFetcher(client);
+        GamesFetcher gamesFetcher = new GamesFetcher();
 
-        GamesFetcher gamesFetcher = new GamesFetcher(client);
-
-        StoresFetcher storesFetcher = new StoresFetcher(client);
+        StoresFetcher storesFetcher = new StoresFetcher();
 
         JSONMapper jsonMapper = new JSONMapper();
 
@@ -79,17 +70,17 @@ public class Main {
 
         //Alerts
 
-        AlertService alertService = new AlertService(client);
-//
+        AlertService alertService = new AlertService();
+
 //        System.out.println(alertService.createOrUpdateAlert("os1996@o2.pl",288, 18.00));
 //
-//        System.out.println(alertService.createOrUpdateAlert("os1996@o2.pl",612, 18.00));
+//        System.out.println(alertService.createOrUpdateAlert("os1996@o2.pl",61222222, 115.00));
 //
 //        System.out.println(alertService.deleteAlert("os1996@o2.pl",288));
-
+//
 //        System.out.println(alertService.getAlertsForEmail("os1996@o2.pl"));
-
-        System.out.println(alertService.createOrUpdateAlertWithGameTitle("legobatman","os1996@o2.pl", 5.00));
+//
+//        System.out.println(alertService.createOrUpdateAlertWithGameTitle("legobatman","os1996@o2.pl", 5.00));
 
     }
 
