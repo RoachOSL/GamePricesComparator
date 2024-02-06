@@ -44,7 +44,7 @@ public class GameLookup {
         GameDealResponse response = gamesFetcher.getGameDealObjectUsingID(gameIdentificator);
 
         if (response.isEmpty()) {
-            throw new NoSuchElementException("GameDealResponse is empty for game ID: " + gameIdentificator);
+            throw new NoSuchElementException("Game deal is empty for followed ID: " + gameIdentificator);
         }
 
         return response;
