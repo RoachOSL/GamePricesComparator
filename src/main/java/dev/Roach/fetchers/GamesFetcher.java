@@ -3,6 +3,7 @@ package dev.Roach.fetchers;
 import dev.Roach.JSONMapper;
 import dev.Roach.datamodel.game.GamePojo;
 import dev.Roach.datamodel.gameLookup.GameDealResponse;
+import lombok.Setter;
 
 import java.io.IOException;
 import java.net.URI;

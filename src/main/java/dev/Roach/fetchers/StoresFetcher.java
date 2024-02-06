@@ -22,7 +22,6 @@ import java.util.List;
 
 @Setter
 public class StoresFetcher {
-    private final HttpClient client;
 
     private HttpClient client = HttpClient.newBuilder().build();
     private final ObjectMapper objectMapper = new ObjectMapper();
@@ -32,7 +31,6 @@ public class StoresFetcher {
     public List<StoreAllPojo> getAllShops() {
 
         JSONMapper jsonMapper = new JSONMapper();
-        ObjectMapper objectMapper = new ObjectMapper();
 
         try (FileWriter fw = new FileWriter(FILE_PATH_TO_STORES)) {
             HttpRequest request = HttpRequest.newBuilder()
@@ -47,7 +45,7 @@ public class StoresFetcher {
             JsonNode jsonResponse = objectMapper.readTree(response.body());
 
             if (!jsonResponse.isArray()) {
-                return new ArrayList<>();
+                return Collections.emptyList();
             }
 
             return jsonMapper.mapArrayOfAllStoresToJava(response.body());

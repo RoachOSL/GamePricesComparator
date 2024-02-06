@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.Roach.JSONMapper;
 import dev.Roach.datamodel.deal.DealAllListPojo;
 import dev.Roach.datamodel.deal.DealAllPojo;
+import lombok.Setter;
 
 import java.io.File;
 import java.io.FileWriter;
@@ -16,8 +17,10 @@ import java.net.http.HttpResponse;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-
+@Setter
 public class DealsFetcher {
 
     private HttpClient client = HttpClient.newBuilder().build();
@@ -25,15 +28,10 @@ public class DealsFetcher {
     private static final String DEALS_API_URL = "https://www.cheapshark.com/api/1.0/deals?";
     private static final String FILE_PATH_TO_ALL_DEALS = "dataFromApi/AllDealsList.txt";
 
-    public DealsFetcher(HttpClient client) {
-        this.client = client;
-    }
-
-    public ArrayList<DealAllListPojo> getAllDeals() {
+    public List<DealAllListPojo> getAllDeals() {
 
         ArrayList<DealAllListPojo> allPages = new ArrayList<>();
         JSONMapper jsonMapper = new JSONMapper();
-        ObjectMapper objectMapper = new ObjectMapper();
 
         HttpRequest initialRequest = HttpRequest.newBuilder()
                 .uri(URI.create(DEALS_API_URL + "pageNumber=0"))
@@ -57,7 +55,7 @@ public class DealsFetcher {
 
                 HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-                ArrayList<DealAllPojo> dealAllPojos = jsonMapper.mapArrayOfDealsToJava(response.body());
+                List<DealAllPojo> dealAllPojos = jsonMapper.mapArrayOfDealsToJava(response.body());
 
                 DealAllListPojo dealAllListPojo = new DealAllListPojo(dealAllPojos);
 
@@ -74,7 +72,7 @@ public class DealsFetcher {
 
         } catch (InterruptedException | IOException exception) {
             exception.printStackTrace();
-            return new ArrayList<>();
+            return Collections.emptyList();
         }
     }
 
@@ -100,9 +98,8 @@ public class DealsFetcher {
         }
     }
 
-    public ArrayList<DealAllListPojo> readAllDealsFromFile() {
+    public List<DealAllListPojo> readAllDealsFromFile() {
         String filePath = "dataFromApi/AllDealsList.txt";
-        ObjectMapper objectMapper = new ObjectMapper();
 
         try {
             if (new File(FILE_PATH_TO_ALL_DEALS).exists()) {
@@ -110,11 +107,11 @@ public class DealsFetcher {
                 return objectMapper.readValue(json, new TypeReference<ArrayList<DealAllListPojo>>() {
                 });
             } else {
-                return new ArrayList<>();
+                return Collections.emptyList();
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return new ArrayList<>();
+            return Collections.emptyList();
         }
     }
 
