@@ -46,9 +46,9 @@ public class AlertServiceTest {
         when(mockClient.send(any(HttpRequest.class),
                 any(HttpResponse.BodyHandlers.ofString().getClass()))).thenReturn(mockResponse);
 
-        boolean result = alertService.createOrUpdateAlert("test@example.com", 1, 9.99);
+        boolean isAlertCreatedOrUpdated  = alertService.createOrUpdateAlert("test@example.com", 1, 9.99);
 
-        assertTrue(result);
+        assertTrue(isAlertCreatedOrUpdated );
     }
 
     @Test
@@ -60,9 +60,9 @@ public class AlertServiceTest {
         when(mockClient.send(any(HttpRequest.class),
                 any(HttpResponse.BodyHandlers.ofString().getClass()))).thenReturn(mockResponse);
 
-        String result = alertService.getAlertsForEmail("test@example.com");
+        String alertsResponse = alertService.getAlertsForEmail("test@example.com");
 
-        assertEquals("Example link send", result);
+        assertEquals("Example link send", alertsResponse);
     }
 
     @Test
@@ -81,9 +81,9 @@ public class AlertServiceTest {
 
         alertService.setGamesFetcher(mockGamesFetcher);
 
-        boolean result = alertService.createOrUpdateAlertWithGameTitle("Test title", "test@example.com", 4.45);
+        boolean isAlertUpdatedForGameTitle = alertService.createOrUpdateAlertWithGameTitle("Test title", "test@example.com", 4.45);
 
-        assertTrue(result);
+        assertTrue(isAlertUpdatedForGameTitle);
     }
 
     @Test
@@ -96,9 +96,9 @@ public class AlertServiceTest {
                 any(HttpResponse.BodyHandlers.ofString().getClass()))).thenReturn(mockResponse);
 
 
-        boolean result = alertService.deleteAlert("test@example.com", 1);
+        boolean isAlertDeleted = alertService.deleteAlert("test@example.com", 1);
 
-        assertTrue(result);
+        assertTrue(isAlertDeleted);
     }
 
     @Test
@@ -115,9 +115,27 @@ public class AlertServiceTest {
 
         alertService.setGamesFetcher(mockGamesFetcher);
 
-        boolean result = alertService.createOrUpdateAlertWithGameTitle("Non existing game", "test@example.com", 4.45);
+        boolean isAlertNotCreatedForMissingGame = alertService.createOrUpdateAlertWithGameTitle("Non existing game", "test@example.com", 4.45);
 
-        assertFalse(result);
+        assertFalse(isAlertNotCreatedForMissingGame);
+    }
+
+    @Test
+    public void testCreateOrUpdateAlertWithNullGameTitleThrowsException() {
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
+            alertService.createOrUpdateAlertWithGameTitle(null, "test@example.com", 4.45);
+        });
+
+        assertEquals("Game title cannot be null or empty.", thrown.getMessage());
+    }
+
+    @Test
+    public void testCreateOrUpdateAlertWithNullEmailThrowsException() {
+        IllegalArgumentException thrown = assertThrows(IllegalArgumentException.class, () -> {
+            alertService.createOrUpdateAlertWithGameTitle("Some game", null, 4.45);
+        });
+
+        assertEquals("Email cannot be null or empty.", thrown.getMessage());
     }
 }
 

@@ -5,6 +5,7 @@ import dev.Roach.datamodel.game.GamePojo;
 import dev.Roach.fetchers.GamesFetcher;
 import lombok.Setter;
 
+import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
@@ -18,14 +19,16 @@ public class AlertService {
 
     private GamesFetcher gamesFetcher = new GamesFetcher();
 
+    private static final String ALERTS_API_URL = "https://www.cheapshark.com/api/1.0/alerts?action=";
+
     public boolean createOrUpdateAlert(String email, int gameID, double price) {
-        String url = String.format("https://www.cheapshark.com/api/1.0/alerts?action=set&email=%s&gameID=%d&price=%.2f",
+        String url = String.format(ALERTS_API_URL + "set&email=%s&gameID=%d&price=%.2f",
                 email, gameID, price);
         return sendAlertRequest(url);
     }
 
     public boolean deleteAlert(String email, int gameID) {
-        String url = String.format("https://www.cheapshark.com/api/1.0/alerts?action=delete&email=%s&gameID=%d",
+        String url = String.format(ALERTS_API_URL + "delete&email=%s&gameID=%d",
                 email, gameID);
         return sendAlertRequest(url);
     }
@@ -45,7 +48,7 @@ public class AlertService {
 
     public String getAlertsForEmail(String email) {
 
-        String url = String.format("https://www.cheapshark.com/api/1.0/alerts?action=manage&email=%s", email);
+        String url = String.format(ALERTS_API_URL + "manage&email=%s", email);
 
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
@@ -54,12 +57,21 @@ public class AlertService {
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
             return response.body();
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        } catch (IOException | InterruptedException e) {
+            e.printStackTrace();
+            return "The request was interrupted or an error occurred while processing the request.";
         }
     }
 
     public boolean createOrUpdateAlertWithGameTitle(String gameTitle, String email, double price) {
+
+        if (gameTitle == null || gameTitle.trim().isEmpty()) {
+            throw new IllegalArgumentException("Game title cannot be null or empty.");
+        }
+        
+        if (email == null || email.trim().isEmpty()) {
+            throw new IllegalArgumentException("Email cannot be null or empty.");
+        }
 
         String transformedGameTitle = gameTitle.toUpperCase().replaceAll("\\s", "");
 
@@ -75,7 +87,7 @@ public class AlertService {
             }
         }
 
-        String url = String.format("https://www.cheapshark.com/api/1.0/alerts?action=set&email=%s&gameID=%d&price=%.2f",
+        String url = String.format(ALERTS_API_URL + "set&email=%s&gameID=%d&price=%.2f",
                 email, gameID, price);
 
         return sendAlertRequest(url);

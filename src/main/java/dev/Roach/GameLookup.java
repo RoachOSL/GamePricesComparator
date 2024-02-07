@@ -8,7 +8,6 @@ import lombok.Setter;
 
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.List;
 
 @Setter
 public class GameLookup {
@@ -24,29 +23,21 @@ public class GameLookup {
 
         List<GamePojo> gamePojos = gamesFetcher.getGameContainingKeyword(transformedGameTitle);
 
-        int gameIdentificator = 0;
-        boolean foundGame = false;
-
         for (GamePojo gamePojo : gamePojos) {
             Game game = new Game(gamePojo.getTitle(), gamePojo.getSteamID(), gamePojo.getCheapestPrice(),
                     gamePojo.getGameID());
             if (transformedGameTitle.equals(game.getTitle())) {
-                gameIdentificator = game.getGameID();
-                foundGame = true;
-                break;
+
+                GameDealResponse response = gamesFetcher.getGameDealObjectUsingID(game.getGameID());
+
+                if (response.isEmpty()) {
+                    throw new NoSuchElementException("Game deal is empty for followed ID: " + game.getGameID());
+                }
+
+                return response;
             }
         }
 
-        if (!foundGame) {
-            throw new NoSuchElementException("No game deals found for the title: " + gameTitle);
-        }
-
-        GameDealResponse response = gamesFetcher.getGameDealObjectUsingID(gameIdentificator);
-
-        if (response.isEmpty()) {
-            throw new NoSuchElementException("Game deal is empty for followed ID: " + gameIdentificator);
-        }
-
-        return response;
+        throw new NoSuchElementException("No game deals found for the title: " + gameTitle);
     }
 }

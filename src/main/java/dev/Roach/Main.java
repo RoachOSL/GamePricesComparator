@@ -65,8 +65,12 @@ public class Main {
         // //GameLookup
 //
 //        GameLookup gameLookup = new GameLookup();
-//        String gameTitleForLookup = "legobatman";
-//        gameLookup.giveTitleToGetListOFDealsWithStores(gameTitleForLookup);
+////        String gameTitleForLookup = "legobatman";
+////        System.out.println(gameLookup.giveTitleToGetListOFDealsWithStores(gameTitleForLookup));
+//
+//        String wrongGameTitleForLookup = "wrong";
+//        System.out.println(gameLookup.giveTitleToGetListOFDealsWithStores(wrongGameTitleForLookup));
+
 
         //Alerts
 
@@ -80,7 +84,7 @@ public class Main {
 //
 //        System.out.println(alertService.getAlertsForEmail("os1996@o2.pl"));
 //
-//        System.out.println(alertService.createOrUpdateAlertWithGameTitle("legobatman","os1996@o2.pl", 5.00));
+//        System.out.println(alertService.createOrUpdateAlertWithGameTitle(null,"os1996@o2.pl", 5.00));
 
     }
 

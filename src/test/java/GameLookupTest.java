@@ -3,10 +3,6 @@ import dev.Roach.datamodel.game.GamePojo;
 import dev.Roach.datamodel.gameLookup.GameDealResponse;
 import dev.Roach.datamodel.gameLookup.GameInfo;
 import dev.Roach.fetchers.GamesFetcher;
-import dev.Roach.datamodel.game.GamePojo;
-import dev.Roach.datamodel.gameLookup.GameDealResponse;
-import dev.Roach.datamodel.gameLookup.GameInfo;
-import dev.Roach.fetchers.GamesFetcher;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -17,14 +13,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.NoSuchElementException;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.anyInt;
-import static org.mockito.Mockito.when;
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyInt;
 import static org.mockito.Mockito.when;
 
