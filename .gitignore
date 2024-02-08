@@ -1,4 +1,5 @@
 .gradle
+dataFromApi/AllDealsList.txt
 build/
 !gradle/wrapper/gradle-wrapper.jar
 !**/src/main/**/build/
