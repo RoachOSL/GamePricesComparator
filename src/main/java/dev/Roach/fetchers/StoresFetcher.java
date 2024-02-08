@@ -45,7 +45,7 @@ public class StoresFetcher {
             JsonNode jsonResponse = objectMapper.readTree(response.body());
 
             if (!jsonResponse.isArray()) {
-                return new ArrayList<>();
+                return Collections.emptyList();
             }
 
             return jsonMapper.mapArrayOfAllStoresToJava(response.body());

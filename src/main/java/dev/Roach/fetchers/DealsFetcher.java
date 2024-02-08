@@ -28,7 +28,6 @@ public class DealsFetcher {
     private static final String DEALS_API_URL = "https://www.cheapshark.com/api/1.0/deals?";
     private static final String FILE_PATH_TO_ALL_DEALS = "dataFromApi/AllDealsList.txt";
 
-
     public List<DealAllListPojo> getAllDeals() {
 
         ArrayList<DealAllListPojo> allPages = new ArrayList<>();

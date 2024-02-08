@@ -15,20 +15,16 @@ public class Main {
 
         JSONMapper jsonMapper = new JSONMapper();
 
-        //CheckForLimit
+       // //Deals
+
+// //       ArrayList<DealAllListPojo> dealAllListPojosFetch = dealsFetcher.getAllDeals();
 //
-//        System.out.println(gamesFetcher.getGameUsingID(612));
-
-        //Deals
-
-//   //     List<DealAllListPojo> dealAllListPojosFetch = dealsFetcher.getAllDeals();
-
-//        List<DealAllListPojo> dealAllListPojosFromTheFile = dealsFetcher.readAllDealsFromFile();
+//        ArrayList<DealAllListPojo> dealAllListPojosFromTheFile = dealsFetcher.readAllDealsFromFile();
 //
 //        ArrayList<Deal> deals = new ArrayList<>();
 //
 //        for (DealAllListPojo dealAllListPojo : dealAllListPojosFromTheFile) {
-//            List<DealAllPojo> dealAllPojos = dealAllListPojo.getDeals();
+//            ArrayList<DealAllPojo> dealAllPojos = dealAllListPojo.getDeals();
 //            for (DealAllPojo dealPojo : dealAllPojos) {
 //                Deal deal = new Deal(dealPojo.getStoreID(), dealPojo.getDealID(), dealPojo.getPrice(),
 //                        dealPojo.getRetailPrice(), dealPojo.getSavings());
@@ -38,10 +34,10 @@ public class Main {
 //
 //        deals.forEach(System.out::println);
 
-//        Game
-//
-//        String keyword = "diablo 4";
-//        List<GamePojo> gamePojos = gamesFetcher.getGameContainingKeyword(keyword);
+//        //Game
+
+//        String keyword = "call of duty";
+//        ArrayList<GamePojo> gamePojos = gamesFetcher.getGameContainingKeyword(keyword);
 //        ArrayList<Game> games = new ArrayList<>();
 //
 //        for (GamePojo gamePojo : gamePojos) {
@@ -52,11 +48,10 @@ public class Main {
 //
 //        games.forEach(System.out::println);
 
-//        Stores
-
-//        storesFetcher.getAllShops();
+        //Store
 //
-//        List<StoreAllPojo> storeAllPojos = storesFetcher.readAllShopsFromFile();
+//        storesFetcher.getAllShops();
+//        ArrayList<StoreAllPojo> storeAllPojos = storesFetcher.readAllShopsFromFile();
 //
 //        ArrayList<Store> stores = new ArrayList<>();
 //
@@ -67,15 +62,29 @@ public class Main {
 //
 //        stores.forEach(System.out::println);
 
-//        //GameLookup
+        // //GameLookup
+//
+//        GameLookup gameLookup = new GameLookup();
+////        String gameTitleForLookup = "legobatman";
+////        System.out.println(gameLookup.giveTitleToGetListOFDealsWithStores(gameTitleForLookup));
+//
+//        String wrongGameTitleForLookup = "wrong";
+//        System.out.println(gameLookup.giveTitleToGetListOFDealsWithStores(wrongGameTitleForLookup));
 
-        GameLookup gameLookup = new GameLookup();
-//        String gameTitleWrong = "gagaga";
-//        gameLookup.giveTitleToGetListOFDealsWithStores(gameTitleWrong);
 
-//        Proper title:
-        String gameTitleProper = "legobatman";
-        System.out.println(gameLookup.giveTitleToGetListOFDealsWithStores(gameTitleProper));
+        //Alerts
+
+        AlertService alertService = new AlertService();
+
+//        System.out.println(alertService.createOrUpdateAlert("os1996@o2.pl",288, 18.00));
+//
+//        System.out.println(alertService.createOrUpdateAlert("os1996@o2.pl",61222222, 115.00));
+//
+//        System.out.println(alertService.deleteAlert("os1996@o2.pl",288));
+//
+//        System.out.println(alertService.getAlertsForEmail("os1996@o2.pl"));
+//
+//        System.out.println(alertService.createOrUpdateAlertWithGameTitle(null,"os1996@o2.pl", 5.00));
 
     }
 
