@@ -46,9 +46,9 @@ public class AlertServiceTest {
         when(mockClient.send(any(HttpRequest.class),
                 any(HttpResponse.BodyHandlers.ofString().getClass()))).thenReturn(mockResponse);
 
-        boolean isAlertCreatedOrUpdated  = alertService.createOrUpdateAlert("test@example.com", 1, 9.99);
+        boolean isAlertCreatedOrUpdated = alertService.createOrUpdateAlert("test@example.com", 1, 9.99);
 
-        assertTrue(isAlertCreatedOrUpdated );
+        assertTrue(isAlertCreatedOrUpdated);
     }
 
     @Test

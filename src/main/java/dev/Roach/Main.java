@@ -15,7 +15,7 @@ public class Main {
 
         JSONMapper jsonMapper = new JSONMapper();
 
-       // //Deals
+        // //Deals
 
 // //       ArrayList<DealAllListPojo> dealAllListPojosFetch = dealsFetcher.getAllDeals();
 //
@@ -85,6 +85,8 @@ public class Main {
 //        System.out.println(alertService.getAlertsForEmail("os1996@o2.pl"));
 //
 //        System.out.println(alertService.createOrUpdateAlertWithGameTitle(null,"os1996@o2.pl", 5.00));
+
+        /// Add menu
 
     }
 

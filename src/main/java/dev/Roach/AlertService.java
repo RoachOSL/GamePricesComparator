@@ -68,7 +68,7 @@ public class AlertService {
         if (gameTitle == null || gameTitle.trim().isEmpty()) {
             throw new IllegalArgumentException("Game title cannot be null or empty.");
         }
-        
+
         if (email == null || email.trim().isEmpty()) {
             throw new IllegalArgumentException("Email cannot be null or empty.");
         }
