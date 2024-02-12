@@ -2,11 +2,9 @@ package dev.Roach.datamodel.game;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 @Getter
 @Setter
-@ToString
 public class Game {
 
     private String title;
@@ -20,6 +18,15 @@ public class Game {
         this.steamID = steamID;
         this.cheapestPrice = cheapestPrice;
         this.gameID = gameID;
+    }
+
+    @Override
+    public String toString() {
+        return "-".repeat(60) + "\n" +
+                "Game Title: " + title + "\n" +
+                "Steam ID: " + (steamID != null ? steamID : "N/A") + "\n" +
+                "Cheapest Price: $" + String.format("%.2f", cheapestPrice) + "\n" +
+                "Game ID: " + gameID;
     }
 
 }
