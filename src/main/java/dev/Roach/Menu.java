@@ -12,13 +12,20 @@ import java.util.Scanner;
 
 public class Menu {
 
+    private final Scanner scanner;
+    private final StoresFetcher storesFetcher;
+    private final GameLookup gameLookup;
+    private final GamesFetcher gamesFetcher;
+    private final AlertService alertService;
     private boolean isProgramRunning = true;
-    private final Scanner scanner = new Scanner(System.in);
-    private final StoresFetcher storesFetcher = new StoresFetcher();
-    private final GameLookup gameLookup = new GameLookup();
-    private final GamesFetcher gamesFetcher = new GamesFetcher();
-    private final AlertService alertService = new AlertService();
 
+    public Menu(Scanner scanner, StoresFetcher storesFetcher, GameLookup gameLookup, GamesFetcher gamesFetcher, AlertService alertService) {
+        this.scanner = scanner;
+        this.storesFetcher = storesFetcher;
+        this.gameLookup = gameLookup;
+        this.gamesFetcher = gamesFetcher;
+        this.alertService = alertService;
+    }
 
     public void startTheProgram() {
 
@@ -53,7 +60,7 @@ public class Menu {
                 """);
     }
 
-    private void handleMenuOption(int option) {
+    public void handleMenuOption(int option) {
 
         switch (option) {
             case 1 -> searchForDealsByTitle(gameLookup);
@@ -190,6 +197,10 @@ public class Menu {
                 System.out.println("Invalid input. Please try again.");
             }
         }
+    }
+
+    public boolean isRunning() {
+        return isProgramRunning;
     }
 
 }
