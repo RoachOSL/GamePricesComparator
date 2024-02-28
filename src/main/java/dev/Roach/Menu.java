@@ -2,6 +2,7 @@ package dev.Roach;
 
 import dev.Roach.datamodel.game.Game;
 import dev.Roach.datamodel.game.GamePojo;
+import dev.Roach.datamodel.gameLookup.GameDealResponse;
 import dev.Roach.fetchers.GamesFetcher;
 import dev.Roach.fetchers.StoresFetcher;
 
@@ -60,7 +61,7 @@ public class Menu {
                 """);
     }
 
-    public void handleMenuOption(int option) {
+    private void handleMenuOption(int option) {
 
         switch (option) {
             case 1 -> searchForDealsByTitle(gameLookup);
@@ -133,12 +134,22 @@ public class Menu {
 
     private void setUpPriceAlert(AlertService alertService) {
         String title = "";
+        boolean titleIsValid = false;
 
-        while (title.isEmpty()) {
-            System.out.println("Enter the game title for the price alert:");
+
+        while (!titleIsValid) {
+            System.out.println("Enter the game title for the price alert (or type 'menu' to back to the menu and check" +
+                    " \"Search for deals using a keyword\" to get exact title):");
             title = getUserInput();
-            if (title.isEmpty()) {
+            if ("menu".equalsIgnoreCase(title)) {
+                System.out.println("Exiting setup.");
+                return;
+            } else if (title.isEmpty()) {
                 System.out.println("Game title cannot be empty.");
+            } else if (!isTitleValid(title)) {
+                System.out.println("Game title is incorrect. Please enter a correct title.");
+            } else {
+                titleIsValid = true;
             }
         }
 
@@ -167,6 +178,22 @@ public class Menu {
         System.out.println(success ? "Alert created successfully for " + email : "Failed to create alert for " + email);
 
         promptToReturn();
+    }
+
+    private boolean isTitleValid(String title) {
+        try {
+            GameDealResponse response = gameLookup.giveTitleToGetListOFDealsWithStores(title);
+
+            if (!response.isEmpty()) {
+                return true;
+            } else {
+                System.out.println("Game deal is empty for the title: " + title);
+                return false;
+            }
+        } catch (NoSuchElementException e) {
+            System.out.println(e.getMessage());
+            return false;
+        }
     }
 
     private void manageAlertsByEmail(AlertService alertService) {
