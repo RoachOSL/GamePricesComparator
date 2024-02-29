@@ -17,10 +17,5 @@ public class Main {
         Menu menu = new Menu(scanner, storesFetcher, gameLookup, gamesFetcher, alertService);
         menu.startTheProgram();
 
-
-
-
-
     }
-
 }

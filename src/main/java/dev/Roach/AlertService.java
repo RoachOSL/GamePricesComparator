@@ -47,7 +47,6 @@ public class AlertService {
     }
 
     public String getAlertsForEmail(String email) {
-
         String url = String.format(ALERTS_API_URL + "manage&email=%s", email);
 
         HttpRequest request = HttpRequest.newBuilder()
@@ -64,7 +63,6 @@ public class AlertService {
     }
 
     public boolean createOrUpdateAlertWithGameTitle(String gameTitle, String email, double price) {
-
         if (gameTitle == null || gameTitle.trim().isEmpty()) {
             throw new IllegalArgumentException("Game title cannot be null or empty.");
         }

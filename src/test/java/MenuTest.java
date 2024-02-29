@@ -45,7 +45,6 @@ class MenuTest {
 
     @Test
     void whenOptionOneThenSearchForDealsByTitleShouldInvokeOnlyOnce() {
-
         GameDealResponse response = new GameDealResponse();
         GameInfo gameInfo = new GameInfo();
         gameInfo.setTitle("Fake Title");
@@ -70,7 +69,6 @@ class MenuTest {
 
     @Test
     void whenOptionTwoThenSearchForDealsByKeywordShouldInvokeOnlyOnce() {
-
         when(scanner.nextLine()).thenReturn("2", "Keyword", "E");
 
         List<GamePojo> gamePojos = new ArrayList<>();
@@ -87,6 +85,10 @@ class MenuTest {
 
     @Test
     void whenOptionThreeThenCreateOrUpdateAlertShouldInvokeOnlyOnce() {
+        GameDealResponse mockResponse = mock(GameDealResponse.class);
+
+        when(mockResponse.isEmpty()).thenReturn(false);
+        when(gameLookup.giveTitleToGetListOFDealsWithStores(anyString())).thenReturn(mockResponse);
 
         when(scanner.nextLine()).thenReturn("3", "Test Game Title", "5", "test@gmail.com", "E");
 
@@ -99,7 +101,6 @@ class MenuTest {
 
     @Test
     void whenOptionFourThenManageAlertsByEmailShouldInvokeOnlyOnce() {
-
         when(scanner.nextLine()).thenReturn("4", "test@gmail.com", "E");
 
         String response = "Test response";
@@ -113,7 +114,6 @@ class MenuTest {
 
     @Test
     void whenOptionFiveShouldQuitProgram() {
-
         when(scanner.nextLine()).thenReturn("5");
 
         menu.startTheProgram();

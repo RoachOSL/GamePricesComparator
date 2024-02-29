@@ -29,7 +29,6 @@ public class Menu {
     }
 
     public void startTheProgram() {
-
         while (isProgramRunning) {
 
             storesFetcher.getAllShops();
@@ -62,7 +61,6 @@ public class Menu {
     }
 
     private void handleMenuOption(int option) {
-
         switch (option) {
             case 1 -> searchForDealsByTitle(gameLookup);
             case 2 -> searchForDealsByKeyword(gamesFetcher);
@@ -77,7 +75,6 @@ public class Menu {
     }
 
     public int selectOption() {
-
         int choice = 0;
 
         try {
@@ -136,7 +133,6 @@ public class Menu {
         String title = "";
         boolean titleIsValid = false;
 
-
         while (!titleIsValid) {
             System.out.println("Enter the game title for the price alert (or type 'menu' to back to the menu and check" +
                     " \"Search for deals using a keyword\" to get exact title):");
@@ -184,6 +180,11 @@ public class Menu {
         try {
             GameDealResponse response = gameLookup.giveTitleToGetListOFDealsWithStores(title);
 
+            if (response == null) {
+                System.out.println("No response received for the title: " + title);
+                return false;
+            }
+
             if (!response.isEmpty()) {
                 return true;
             } else {
@@ -191,13 +192,12 @@ public class Menu {
                 return false;
             }
         } catch (NoSuchElementException e) {
-            System.out.println(e.getMessage());
+            e.printStackTrace();
             return false;
         }
     }
 
     private void manageAlertsByEmail(AlertService alertService) {
-
         System.out.println("Enter your email to receive alert notifications:");
 
         String email = validateEmailInput();
@@ -208,7 +208,6 @@ public class Menu {
     }
 
     private void promptToReturn() {
-
         boolean shouldReturn = false;
 
         while (!shouldReturn) {
