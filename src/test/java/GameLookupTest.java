@@ -29,7 +29,7 @@ class GameLookupTest {
     private GameLookup gameLookup;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         gameLookup = new GameLookup();
         gameLookup.setGamesFetcher(mockGamesFetcher);
     }

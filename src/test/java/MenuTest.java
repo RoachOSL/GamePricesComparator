@@ -41,12 +41,12 @@ class MenuTest {
     private Menu menu;
 
     @BeforeEach
-    void setUp() {
+    public void setUp() {
         menu = new Menu(scanner, storesFetcher, gameLookup, gamesFetcher, alertService);
     }
 
     @Test
-    void whenOptionOneThenSearchForDealsByTitleShouldInvokeOnlyOnce() {
+    public void whenOptionOneThenSearchForDealsByTitleShouldInvokeOnlyOnce() {
         GameDealResponse response = new GameDealResponse();
         GameInfo gameInfo = new GameInfo();
         gameInfo.setTitle("Fake Title");
@@ -70,7 +70,7 @@ class MenuTest {
     }
 
     @Test
-    void whenOptionTwoThenSearchForDealsByKeywordShouldInvokeOnlyOnce() {
+    public void whenOptionTwoThenSearchForDealsByKeywordShouldInvokeOnlyOnce() {
         when(scanner.nextLine()).thenReturn("2", "Keyword", "E");
 
         List<GamePojo> gamePojos = new ArrayList<>();
@@ -86,7 +86,7 @@ class MenuTest {
     }
 
     @Test
-    void whenOptionThreeThenCreateOrUpdateAlertShouldInvokeOnlyOnce() {
+    public void whenOptionThreeThenCreateOrUpdateAlertShouldInvokeOnlyOnce() {
         GameDealResponse mockResponse = mock(GameDealResponse.class);
 
         when(mockResponse.isEmpty()).thenReturn(false);
@@ -102,7 +102,7 @@ class MenuTest {
     }
 
     @Test
-    void whenOptionFourThenManageAlertsByEmailShouldInvokeOnlyOnce() {
+    public void whenOptionFourThenManageAlertsByEmailShouldInvokeOnlyOnce() {
         when(scanner.nextLine()).thenReturn("4", "test@gmail.com", "E");
 
         String response = "Test response";
@@ -115,13 +115,12 @@ class MenuTest {
     }
 
     @Test
-    void whenOptionFiveShouldQuitProgram() {
+    public void whenOptionFiveShouldQuitProgram() {
         when(scanner.nextLine()).thenReturn("5");
 
         menu.startTheProgram();
 
         Assertions.assertFalse(menu.isRunning());
     }
-
 
 }
