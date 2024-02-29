@@ -8,7 +8,6 @@ import lombok.ToString;
 @Setter
 @ToString
 public class Store {
-
     private String id;
     private String name;
     private boolean isActive;
@@ -18,5 +17,4 @@ public class Store {
         this.name = name;
         this.isActive = isActive;
     }
-
 }

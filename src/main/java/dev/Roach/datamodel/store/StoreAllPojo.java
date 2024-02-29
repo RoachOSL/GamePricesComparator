@@ -9,7 +9,6 @@ import lombok.ToString;
 @Setter
 @ToString
 public class StoreAllPojo {
-
     @JsonProperty("storeID")
     private String id;
     @JsonProperty("storeName")
@@ -17,5 +16,4 @@ public class StoreAllPojo {
     @JsonProperty("isActive")
     private boolean isActive;
     private ImagePojo images;
-
 }

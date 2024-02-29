@@ -14,11 +14,8 @@ import java.util.List;
 
 @Setter
 public class AlertService {
-
     private HttpClient httpClient = HttpClient.newBuilder().build();
-
     private GamesFetcher gamesFetcher = new GamesFetcher();
-
     private static final String ALERTS_API_URL = "https://www.cheapshark.com/api/1.0/alerts?action=";
 
     public boolean createOrUpdateAlert(String email, int gameID, double price) {

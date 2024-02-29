@@ -6,12 +6,10 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Game {
-
     private String title;
     private String steamID;
     private double cheapestPrice;
     private int gameID;
-
 
     public Game(String title, String steamID, double cheapestPrice, int gameID) {
         this.title = title;

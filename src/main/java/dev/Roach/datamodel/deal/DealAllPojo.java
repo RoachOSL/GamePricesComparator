@@ -10,7 +10,6 @@ import lombok.ToString;
 @Setter
 @ToString
 public class DealAllPojo {
-
     private String internalName;
     private String title;
     private String metacriticLink;

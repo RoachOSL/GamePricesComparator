@@ -39,7 +39,6 @@ public class AlertServiceTest {
 
     @Test
     public void testCreateOrUpdateAlertShouldReturnCorrectInput() throws IOException, InterruptedException {
-
         HttpResponse<String> mockResponse = Mockito.mock(HttpResponse.class);
 
         when(mockResponse.body()).thenReturn("true");
@@ -53,7 +52,6 @@ public class AlertServiceTest {
 
     @Test
     public void testGetAlertsForEmailShouldReturnCorrectResponse() throws IOException, InterruptedException {
-
         HttpResponse<String> mockResponse = Mockito.mock(HttpResponse.class);
 
         when(mockResponse.body()).thenReturn("Example link send");
@@ -67,7 +65,6 @@ public class AlertServiceTest {
 
     @Test
     public void testCreateOrUpdateAlertWithGameTitleShouldReturnCorrectInput() throws IOException, InterruptedException {
-
         GamePojo mockGamePojo = new GamePojo();
         mockGamePojo.setTitle("Test title");
 
@@ -88,7 +85,6 @@ public class AlertServiceTest {
 
     @Test
     public void testDeleteAlertShouldReturnTrueOnSuccess() throws IOException, InterruptedException {
-
         HttpResponse<String> mockResponse = Mockito.mock(HttpResponse.class);
 
         when(mockResponse.body()).thenReturn("true");
@@ -103,8 +99,6 @@ public class AlertServiceTest {
 
     @Test
     public void testCreateOrUpdateAlertWithGameTitleShouldReturnFalseWhenGameNotFound() throws IOException, InterruptedException {
-
-
         when(mockGamesFetcher.getGameContainingKeyword(anyString())).thenReturn(List.of());
 
         HttpResponse<String> mockResponse = Mockito.mock(HttpResponse.class);

@@ -14,7 +14,6 @@ import java.util.List;
 
 
 public class JSONMapper {
-
     private static final ObjectMapper objectMapper = new ObjectMapper();
 
     public List<GamePojo> mapArrayOfGamePojoToJava(String json) {

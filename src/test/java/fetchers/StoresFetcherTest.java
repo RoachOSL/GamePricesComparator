@@ -38,7 +38,6 @@ public class StoresFetcherTest {
 
     @Test
     public void getAllShopsCheckForCorrectResponse() throws IOException, InterruptedException {
-
         String expectedResult = "testID";
 
         HttpResponse<String> mockResponse = Mockito.mock(HttpResponse.class);
@@ -54,7 +53,6 @@ public class StoresFetcherTest {
 
     @Test
     public void getAllShopsShouldReturnEmptyListOnEmptyResponse() throws IOException, InterruptedException {
-
         HttpResponse<String> mockResponse = Mockito.mock(HttpResponse.class);
 
         when(mockResponse.body()).thenReturn("[]");
@@ -68,7 +66,6 @@ public class StoresFetcherTest {
 
     @Test
     public void getAllShopsShouldHandleInvalidResponse() throws IOException, InterruptedException {
-
         HttpResponse<String> mockResponse = Mockito.mock(HttpResponse.class);
 
         when(mockResponse.body()).thenReturn("fafafa");
@@ -82,26 +79,22 @@ public class StoresFetcherTest {
 
     @Test
     public void getAllShopsShouldHandleIOException() throws IOException, InterruptedException {
-
         when(mockClient.send(any(HttpRequest.class), any(HttpResponse.BodyHandler.class)))
                 .thenThrow(new IOException());
 
         List<StoreAllPojo> result = storesFetcher.getAllShops();
 
         assertTrue(result.isEmpty());
-
     }
 
     @Test
     public void getAllShopsShouldHandleInterruptedException() throws IOException, InterruptedException {
-
         when(mockClient.send(any(HttpRequest.class), any(HttpResponse.BodyHandler.class)))
                 .thenThrow(new InterruptedException());
 
         List<StoreAllPojo> result = storesFetcher.getAllShops();
 
         assertTrue(result.isEmpty());
-
     }
 
 }

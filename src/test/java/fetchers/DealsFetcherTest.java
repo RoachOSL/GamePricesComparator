@@ -40,7 +40,6 @@ public class DealsFetcherTest {
 
     @Test
     public void getAllDealsReturnCorrectPages() throws IOException, InterruptedException {
-
         HttpResponse<String> initialMockResponse = Mockito.mock(HttpResponse.class);
         HttpResponse<String> firstMockResponse = Mockito.mock(HttpResponse.class);
         HttpResponse<String> secondMockResponse = Mockito.mock(HttpResponse.class);
@@ -73,7 +72,6 @@ public class DealsFetcherTest {
 
     @Test
     public void getAllDealsShouldHandleInterruptedException() throws IOException, InterruptedException {
-
         when(mockClient.send(any(HttpRequest.class),
                 any(HttpResponse.BodyHandler.class))).thenThrow(InterruptedException.class);
 
@@ -84,7 +82,6 @@ public class DealsFetcherTest {
 
     @Test
     public void getAllDealsShouldHandleIOException() throws IOException, InterruptedException {
-
         when(mockClient.send(any(HttpRequest.class), any(HttpResponse.BodyHandler.class)))
                 .thenThrow(IOException.class);
 
@@ -95,7 +92,6 @@ public class DealsFetcherTest {
 
     @Test
     public void getDealUsingIDShouldReturnEmptyForInvalidId() throws IOException, InterruptedException {
-
         HttpResponse<String> mockResponse = Mockito.mock(HttpResponse.class);
 
         when(mockResponse.body()).thenReturn("[]");
@@ -110,7 +106,6 @@ public class DealsFetcherTest {
 
     @Test
     public void getDealUsingIDShouldReturnExpectedResponseWhenIdIsNull() {
-
         String actualResponse = dealsFetcher.getDealUsingID(null);
 
         Assertions.assertEquals("NULL", actualResponse);
@@ -118,7 +113,6 @@ public class DealsFetcherTest {
 
     @Test
     public void getDealUsingIDShouldReturnValidResponseForValidId() throws IOException, InterruptedException {
-
         HttpResponse<String> mockResponse = Mockito.mock(HttpResponse.class);
 
         String expectedResponse = "Information about deal";

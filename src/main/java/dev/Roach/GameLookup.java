@@ -14,7 +14,6 @@ public class GameLookup {
     private GamesFetcher gamesFetcher = new GamesFetcher();
 
     public GameDealResponse giveTitleToGetListOFDealsWithStores(String gameTitle) {
-
         if (gameTitle == null || gameTitle.isEmpty()) {
             throw new NoSuchElementException("Game title cannot be null or empty.");
         }

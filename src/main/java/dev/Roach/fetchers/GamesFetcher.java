@@ -17,13 +17,11 @@ import java.util.List;
 
 @Setter
 public class GamesFetcher {
-
     private HttpClient client = HttpClient.newBuilder().build();
     private final JSONMapper jsonMapper = new JSONMapper();
     private static final String GAMES_API_URL = "https://www.cheapshark.com/api/1.0/games?";
 
     public List<GamePojo> getGameContainingKeyword(String keyword) {
-
         if (keyword == null) {
             throw new NullPointerException("Keyword can't be a null");
         }
@@ -70,7 +68,6 @@ public class GamesFetcher {
     }
 
     public GameDealResponse getGameDealObjectUsingID(int id) {
-
         try {
             HttpRequest request = HttpRequest.newBuilder()
                     .uri(URI.create(GAMES_API_URL + "id=" + id))

@@ -22,14 +22,12 @@ import java.util.List;
 
 @Setter
 public class DealsFetcher {
-
     private HttpClient client = HttpClient.newBuilder().build();
     private final ObjectMapper objectMapper = new ObjectMapper();
     private static final String DEALS_API_URL = "https://www.cheapshark.com/api/1.0/deals?";
     private static final String FILE_PATH_TO_ALL_DEALS = "dataFromApi/AllDealsList.txt";
 
     public List<DealAllListPojo> getAllDeals() {
-
         ArrayList<DealAllListPojo> allPages = new ArrayList<>();
         JSONMapper jsonMapper = new JSONMapper();
 
@@ -76,7 +74,6 @@ public class DealsFetcher {
     }
 
     public String getDealUsingID(String id) {
-
         if (id == null) {
             return "NULL";
         }
@@ -98,7 +95,6 @@ public class DealsFetcher {
     }
 
     public List<DealAllListPojo> readAllDealsFromFile() {
-
         try {
             if (new File(FILE_PATH_TO_ALL_DEALS).exists()) {
                 String json = new String(Files.readAllBytes(Paths.get(FILE_PATH_TO_ALL_DEALS)));
@@ -112,5 +108,4 @@ public class DealsFetcher {
             return Collections.emptyList();
         }
     }
-
 }

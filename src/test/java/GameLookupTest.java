@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -24,6 +25,7 @@ class GameLookupTest {
     @Mock
     private GamesFetcher mockGamesFetcher;
 
+    @InjectMocks
     private GameLookup gameLookup;
 
     @BeforeEach
@@ -34,7 +36,6 @@ class GameLookupTest {
 
     @Test
     public void testGiveTitleToGetListOFDealsWithStoresWithValidTitle() {
-
         String keyword = "legobatman";
         String transformedGameTitle = keyword.toUpperCase().replaceAll("\\s", "");
 
@@ -60,7 +61,6 @@ class GameLookupTest {
 
     @Test
     public void testGiveTitleToGetListOFDealsWithStoresWithInvalidTitle() {
-
         String keyword = "InvalidTitle";
         when(mockGamesFetcher.getGameContainingKeyword(keyword.toUpperCase().replaceAll("\\s", ""))).thenReturn(new ArrayList<>());
 

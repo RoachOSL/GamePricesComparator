@@ -38,7 +38,6 @@ class GamesFetcherTest {
 
     @Test
     public void getGameContainingKeywordResponseForValidKeyword() throws IOException, InterruptedException {
-
         String keyword = "gameTest";
         HttpResponse<String> mockResponse = Mockito.mock(HttpResponse.class);
 
@@ -53,7 +52,6 @@ class GamesFetcherTest {
 
     @Test
     public void getGameContainsNullAsKeyword() {
-
         try {
             gamesFetcher.getGameContainingKeyword(null);
         } catch (NullPointerException e) {
@@ -63,7 +61,6 @@ class GamesFetcherTest {
 
     @Test
     public void getGameUsingIDResponseForValidKeyword() throws IOException, InterruptedException {
-
         int testID = 52671;
 
         HttpResponse<String> mockResponse = Mockito.mock(HttpResponse.class);
@@ -79,7 +76,6 @@ class GamesFetcherTest {
 
     @Test
     public void getGameUsingIDThatDoesNotExist() throws IOException, InterruptedException {
-
         int id = 24380221;
 
         HttpResponse<String> mockitoResponse = Mockito.mock(HttpResponse.class);

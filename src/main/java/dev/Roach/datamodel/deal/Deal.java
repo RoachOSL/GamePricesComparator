@@ -14,7 +14,6 @@ public class Deal {
     private String price;
     private String retailPrice;
 
-
     public Deal(String storeID, String dealID, String price, String retailPrice, double savings) {
         this.storeID = storeID;
         this.dealID = dealID;

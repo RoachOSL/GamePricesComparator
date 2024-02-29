@@ -24,7 +24,6 @@ public class JSONMapperTest {
 
     @Test
     public void mapArrayOfGamePojoToJavaTestForSuccessOfProperInput() {
-
         String json = """
                 [
                     {
@@ -72,7 +71,6 @@ public class JSONMapperTest {
 
     @Test
     public void mapArrayOfDealsToJavaTestForSuccessOfProperInput() {
-
         String json = """
                 [
                     {
@@ -125,7 +123,6 @@ public class JSONMapperTest {
 
     @Test
     public void mapArrayOfDealsToJavaTestForEmptyJson() {
-
         String json = "[]";
 
         ArrayList<DealAllPojo> expectedResult = new ArrayList<>();
@@ -138,7 +135,6 @@ public class JSONMapperTest {
 
     @Test
     public void mapArrayOfAllStoresToJavaTestForSuccessOfProperInput() {
-
         String json = """
                 [
                     {
@@ -197,7 +193,6 @@ public class JSONMapperTest {
 
     @Test
     public void mapArrayOfAllStoresToJavaTestForEmptyJson() {
-
         String json = "[]";
 
         ArrayList<StoreAllPojo> expectedResult = new ArrayList<>();
@@ -210,7 +205,6 @@ public class JSONMapperTest {
 
     @Test
     public void mapToGameDealResponseTestForSuccessOfProperInput() {
-
         String json = """
                 [
                      {
@@ -307,7 +301,6 @@ public class JSONMapperTest {
 
     @Test
     public void mapGameDealResponseToJavaTestForEmptyJson() {
-
         String json = "[]";
 
         GameDealResponse expectedResult = new GameDealResponse();

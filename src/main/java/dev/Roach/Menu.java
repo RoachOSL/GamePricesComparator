@@ -12,7 +12,6 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Menu {
-
     private final Scanner scanner;
     private final StoresFetcher storesFetcher;
     private final GameLookup gameLookup;
