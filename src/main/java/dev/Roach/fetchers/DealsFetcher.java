@@ -1,21 +1,17 @@
 package dev.Roach.fetchers;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.Roach.JSONMapper;
 import dev.Roach.datamodel.deal.DealAllListPojo;
 import dev.Roach.datamodel.deal.DealAllPojo;
 import lombok.Setter;
 
-import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -94,18 +90,4 @@ public class DealsFetcher {
         }
     }
 
-    public List<DealAllListPojo> readAllDealsFromFile() {
-        try {
-            if (new File(FILE_PATH_TO_ALL_DEALS).exists()) {
-                String json = new String(Files.readAllBytes(Paths.get(FILE_PATH_TO_ALL_DEALS)));
-                return objectMapper.readValue(json, new TypeReference<ArrayList<DealAllListPojo>>() {
-                });
-            } else {
-                return Collections.emptyList();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-            return Collections.emptyList();
-        }
-    }
 }

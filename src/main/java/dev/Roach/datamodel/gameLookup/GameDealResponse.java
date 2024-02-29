@@ -7,7 +7,6 @@ import java.util.List;
 
 @Getter
 @Setter
-
 public class GameDealResponse {
     private GameInfo info;
     private CheapestPrice cheapestPriceEver;
@@ -29,7 +28,6 @@ public class GameDealResponse {
             sb.append("Savings: ").append(deal.getSavings()).append("\n");
             sb.append("\n");
         }
-
         return sb.toString();
     }
 

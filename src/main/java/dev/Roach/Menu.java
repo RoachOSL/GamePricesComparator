@@ -3,13 +3,12 @@ package dev.Roach;
 import dev.Roach.datamodel.game.Game;
 import dev.Roach.datamodel.game.GamePojo;
 import dev.Roach.datamodel.gameLookup.GameDealResponse;
+import dev.Roach.datamodel.store.StoreAllPojo;
 import dev.Roach.fetchers.GamesFetcher;
 import dev.Roach.fetchers.StoresFetcher;
 
-import java.util.InputMismatchException;
-import java.util.List;
-import java.util.NoSuchElementException;
-import java.util.Scanner;
+import java.io.File;
+import java.util.*;
 
 public class Menu {
     private final Scanner scanner;
@@ -18,6 +17,7 @@ public class Menu {
     private final GamesFetcher gamesFetcher;
     private final AlertService alertService;
     private boolean isProgramRunning = true;
+    private static final String FILE_PATH_TO_STORES = "dataFromApi/ShopList.txt";
 
     public Menu(Scanner scanner, StoresFetcher storesFetcher, GameLookup gameLookup, GamesFetcher gamesFetcher, AlertService alertService) {
         this.scanner = scanner;
@@ -30,7 +30,7 @@ public class Menu {
     public void startTheProgram() {
         while (isProgramRunning) {
 
-            storesFetcher.getAllShops();
+            validateStoreList();
             displayMenu();
 
             try {
@@ -41,6 +41,23 @@ public class Menu {
                 scanner.nextLine();
             }
         }
+    }
+
+    private void validateStoreList() {
+        List<StoreAllPojo> currentShops = storesFetcher.readAllShopsFromFile();
+        if (currentShops.isEmpty() || !isFileRecent()) {
+            storesFetcher.getAllShops();
+        }
+    }
+
+    private boolean isFileRecent() {
+        File file = new File(FILE_PATH_TO_STORES);
+        if (!file.exists()) {
+            return false;
+        }
+        long lastModified = file.lastModified();
+        long daysInMillis = 3 * 24 * 60 * 60 * 1000L;
+        return (System.currentTimeMillis() - lastModified) <= daysInMillis;
     }
 
     private String getUserInput() {
@@ -105,10 +122,7 @@ public class Menu {
         String keyword = getUserInput();
 
         List<GamePojo> gamePojos = gamesFetcher.getGameContainingKeyword(keyword);
-        gamePojos.stream()
-                .map(pojo -> new Game(pojo.getTitle(), pojo.getSteamID(), pojo.getCheapestPrice(), pojo.getGameID()))
-                .limit(25)
-                .forEach(System.out::println);
+        gamePojos.stream().map(pojo -> new Game(pojo.getTitle(), pojo.getSteamID(), pojo.getCheapestPrice(), pojo.getGameID())).limit(25).forEach(System.out::println);
 
         if (gamePojos.isEmpty()) {
             System.out.println("No game deals found for the keyword: " + keyword);
@@ -133,8 +147,7 @@ public class Menu {
         boolean titleIsValid = false;
 
         while (!titleIsValid) {
-            System.out.println("Enter the game title for the price alert (or type 'menu' to back to the menu and check" +
-                    " \"Search for deals using a keyword\" to get exact title):");
+            System.out.println("Enter the game title for the price alert (or type 'menu' to back to the menu and check" + " \"Search for deals using a keyword\" to get exact title):");
             title = getUserInput();
             if ("menu".equalsIgnoreCase(title)) {
                 System.out.println("Exiting setup.");

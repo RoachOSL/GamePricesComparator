@@ -21,5 +21,4 @@ public class GamePojo {
     @JsonProperty("internalName")
     private String title;
     private String thumb;
-
 }

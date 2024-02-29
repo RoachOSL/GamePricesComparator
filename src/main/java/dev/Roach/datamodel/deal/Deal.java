@@ -21,6 +21,4 @@ public class Deal {
         this.retailPrice = retailPrice;
         this.savings = savings;
     }
-
-
 }

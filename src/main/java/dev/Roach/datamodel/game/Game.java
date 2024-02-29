@@ -26,5 +26,4 @@ public class Game {
                 "Cheapest Price: $" + String.format("%.2f", cheapestPrice) + "\n" +
                 "Game ID: " + gameID;
     }
-
 }

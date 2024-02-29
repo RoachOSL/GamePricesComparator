@@ -7,13 +7,8 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        StoresFetcher storesFetcher = new StoresFetcher();
-        GameLookup gameLookup = new GameLookup();
-        GamesFetcher gamesFetcher = new GamesFetcher();
-        AlertService alertService = new AlertService();
-
-        Menu menu = new Menu(scanner, storesFetcher, gameLookup, gamesFetcher, alertService);
+        Menu menu = new Menu(new Scanner(System.in), new StoresFetcher(), new GameLookup(),
+                new GamesFetcher(), new AlertService());
         menu.startTheProgram();
     }
 }

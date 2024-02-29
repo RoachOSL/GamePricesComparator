@@ -12,7 +12,6 @@ import dev.Roach.datamodel.store.StoreAllPojo;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class JSONMapper {
     private static final ObjectMapper objectMapper = new ObjectMapper();
 

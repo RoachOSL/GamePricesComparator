@@ -18,18 +18,6 @@ public class AlertService {
     private GamesFetcher gamesFetcher = new GamesFetcher();
     private static final String ALERTS_API_URL = "https://www.cheapshark.com/api/1.0/alerts?action=";
 
-    public boolean createOrUpdateAlert(String email, int gameID, double price) {
-        String url = String.format(ALERTS_API_URL + "set&email=%s&gameID=%d&price=%.2f",
-                email, gameID, price);
-        return sendAlertRequest(url);
-    }
-
-    public boolean deleteAlert(String email, int gameID) {
-        String url = String.format(ALERTS_API_URL + "delete&email=%s&gameID=%d",
-                email, gameID);
-        return sendAlertRequest(url);
-    }
-
     private boolean sendAlertRequest(String url) {
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create(url))
@@ -42,6 +30,19 @@ public class AlertService {
 
         }
     }
+
+    public boolean createOrUpdateAlert(String email, int gameID, double price) {
+        String url = String.format(ALERTS_API_URL + "set&email=%s&gameID=%d&price=%.2f",
+                email, gameID, price);
+        return sendAlertRequest(url);
+    }
+
+    public boolean deleteAlert(String email, int gameID) {
+        String url = String.format(ALERTS_API_URL + "delete&email=%s&gameID=%d",
+                email, gameID);
+        return sendAlertRequest(url);
+    }
+
 
     public String getAlertsForEmail(String email) {
         String url = String.format(ALERTS_API_URL + "manage&email=%s", email);

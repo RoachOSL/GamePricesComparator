@@ -56,17 +56,27 @@ public class StoresFetcher {
 
     public List<StoreAllPojo> readAllShopsFromFile() {
         try {
-            if (new File(FILE_PATH_TO_STORES).exists()) {
+            if (new File(FILE_PATH_TO_STORES).exists() && isFileRecent()) {
                 String json = new String(Files.readAllBytes(Paths.get(FILE_PATH_TO_STORES)));
                 return objectMapper.readValue(json, new TypeReference<ArrayList<StoreAllPojo>>() {
                 });
             } else {
                 return Collections.emptyList();
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
             return Collections.emptyList();
         }
+    }
+
+    private boolean isFileRecent() {
+        File file = new File(FILE_PATH_TO_STORES);
+        if (!file.exists()) {
+            return false;
+        }
+        long lastModified = file.lastModified();
+        long daysInMillis = 3 * 24 * 60 * 60 * 1000L;
+        return (System.currentTimeMillis() - lastModified) <= daysInMillis;
     }
 
 }
