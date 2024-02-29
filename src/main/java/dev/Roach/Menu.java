@@ -7,8 +7,10 @@ import dev.Roach.datamodel.store.StoreAllPojo;
 import dev.Roach.fetchers.GamesFetcher;
 import dev.Roach.fetchers.StoresFetcher;
 
-import java.io.File;
-import java.util.*;
+import java.util.InputMismatchException;
+import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Scanner;
 
 public class Menu {
     private final Scanner scanner;
@@ -45,19 +47,9 @@ public class Menu {
 
     private void validateStoreList() {
         List<StoreAllPojo> currentShops = storesFetcher.readAllShopsFromFile();
-        if (currentShops.isEmpty() || !isFileRecent()) {
+        if (currentShops.isEmpty()) {
             storesFetcher.getAllShops();
         }
-    }
-
-    private boolean isFileRecent() {
-        File file = new File(FILE_PATH_TO_STORES);
-        if (!file.exists()) {
-            return false;
-        }
-        long lastModified = file.lastModified();
-        long daysInMillis = 3 * 24 * 60 * 60 * 1000L;
-        return (System.currentTimeMillis() - lastModified) <= daysInMillis;
     }
 
     private String getUserInput() {

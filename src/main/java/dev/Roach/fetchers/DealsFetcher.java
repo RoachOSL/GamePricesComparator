@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import dev.Roach.JSONMapper;
 import dev.Roach.datamodel.deal.DealAllListPojo;
 import dev.Roach.datamodel.deal.DealAllPojo;
+import lombok.Getter;
 import lombok.Setter;
 
 import java.io.FileWriter;
@@ -17,13 +18,14 @@ import java.util.Collections;
 import java.util.List;
 
 @Setter
+@Getter
 public class DealsFetcher {
     private HttpClient client = HttpClient.newBuilder().build();
     private final ObjectMapper objectMapper = new ObjectMapper();
     private static final String DEALS_API_URL = "https://www.cheapshark.com/api/1.0/deals?";
     private static final String FILE_PATH_TO_ALL_DEALS = "dataFromApi/AllDealsList.txt";
 
-    public List<DealAllListPojo> getAllDeals() {
+    public List<DealAllListPojo> getAllDealsAndWriteToTheFile() {
         ArrayList<DealAllListPojo> allPages = new ArrayList<>();
         JSONMapper jsonMapper = new JSONMapper();
 

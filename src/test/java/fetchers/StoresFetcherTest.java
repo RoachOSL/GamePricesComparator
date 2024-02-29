@@ -2,6 +2,7 @@ package fetchers;
 
 import dev.Roach.datamodel.store.StoreAllPojo;
 import dev.Roach.fetchers.StoresFetcher;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -15,6 +16,8 @@ import java.io.IOException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -34,6 +37,12 @@ public class StoresFetcherTest {
     public void setUp() {
         storesFetcher = new StoresFetcher();
         storesFetcher.setClient(mockClient);
+    }
+    @AfterEach
+    public void deleteFile() throws IOException {
+        String FILE_PATH_TO_ALL_DEALS = "dataFromApi/ShopList.txt";
+
+        Files.deleteIfExists(Path.of(FILE_PATH_TO_ALL_DEALS));
     }
 
     @Test

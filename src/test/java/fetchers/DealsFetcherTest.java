@@ -2,6 +2,7 @@ package fetchers;
 
 import dev.Roach.datamodel.deal.DealAllListPojo;
 import dev.Roach.fetchers.DealsFetcher;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -16,6 +17,8 @@ import java.net.http.HttpClient;
 import java.net.http.HttpHeaders;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
 
@@ -36,6 +39,12 @@ public class DealsFetcherTest {
     public void setUp() {
         dealsFetcher = new DealsFetcher();
         dealsFetcher.setClient(mockClient);
+    }
+    @AfterEach
+    public void deleteFile() throws IOException {
+        String FILE_PATH_TO_ALL_DEALS = "dataFromApi/AllDealsList.txt";
+
+        Files.deleteIfExists(Path.of(FILE_PATH_TO_ALL_DEALS));
     }
 
     @Test
@@ -61,7 +70,7 @@ public class DealsFetcherTest {
                 .thenReturn(secondMockResponse)
                 .thenReturn(thirdMockResponse);
 
-        List<DealAllListPojo> allDeals = dealsFetcher.getAllDeals();
+        List<DealAllListPojo> allDeals = dealsFetcher.getAllDealsAndWriteToTheFile();
 
         Assertions.assertEquals(3, allDeals.size());
 
@@ -75,7 +84,7 @@ public class DealsFetcherTest {
         when(mockClient.send(any(HttpRequest.class),
                 any(HttpResponse.BodyHandler.class))).thenThrow(InterruptedException.class);
 
-        List<DealAllListPojo> allDeals = dealsFetcher.getAllDeals();
+        List<DealAllListPojo> allDeals = dealsFetcher.getAllDealsAndWriteToTheFile();
 
         Assertions.assertTrue(allDeals.isEmpty());
     }
@@ -85,7 +94,7 @@ public class DealsFetcherTest {
         when(mockClient.send(any(HttpRequest.class), any(HttpResponse.BodyHandler.class)))
                 .thenThrow(IOException.class);
 
-        List<DealAllListPojo> allDeals = dealsFetcher.getAllDeals();
+        List<DealAllListPojo> allDeals = dealsFetcher.getAllDealsAndWriteToTheFile();
 
         Assertions.assertTrue(allDeals.isEmpty());
     }
