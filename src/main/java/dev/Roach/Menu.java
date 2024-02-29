@@ -81,7 +81,7 @@ public class Menu {
         }
     }
 
-    public int selectOption() {
+    private int selectOption() {
         int choice = 0;
 
         try {
