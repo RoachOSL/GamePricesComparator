@@ -19,7 +19,6 @@ public class Menu {
     private final GamesFetcher gamesFetcher;
     private final AlertService alertService;
     private boolean isProgramRunning = true;
-    private static final String FILE_PATH_TO_STORES = "dataFromApi/ShopList.txt";
 
     public Menu(Scanner scanner, StoresFetcher storesFetcher, GameLookup gameLookup, GamesFetcher gamesFetcher, AlertService alertService) {
         this.scanner = scanner;
