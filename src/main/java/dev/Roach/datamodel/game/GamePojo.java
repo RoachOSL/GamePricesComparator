@@ -8,7 +8,6 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-
 public class GamePojo {
     @JsonProperty("gameID")
     private int gameID;
