@@ -1,8 +1,7 @@
 package dev.Roach.fetchers;
 
-import dev.Roach.JSONMapper;
-import dev.Roach.datamodel.game.GamePojo;
-import dev.Roach.datamodel.gameLookup.GameDealResponse;
+import dev.Roach.datamodel.Game;
+import dev.Roach.mappers.GameMapper;
 import lombok.Setter;
 
 import java.io.IOException;
@@ -18,10 +17,10 @@ import java.util.List;
 @Setter
 public class GamesFetcher {
     private HttpClient client = HttpClient.newBuilder().build();
-    private final JSONMapper jsonMapper = new JSONMapper();
+    private final GameMapper gameMapper = new GameMapper();
     private static final String GAMES_API_URL = "https://www.cheapshark.com/api/1.0/games?";
 
-    public List<GamePojo> getGameContainingKeyword(String keyword) {
+    public List<Game> getGameContainingKeyword(String keyword) {
         if (keyword == null) {
             throw new NullPointerException("Keyword can't be a null");
         }
@@ -36,7 +35,7 @@ public class GamesFetcher {
 
             HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
 
-            return jsonMapper.mapArrayOfGamePojoToJava(response.body());
+            return gameMapper.mapArrayOfGamePojoToJava(response.body());
 
         } catch (InterruptedException | IOException e) {
             e.printStackTrace();
@@ -44,44 +43,5 @@ public class GamesFetcher {
         }
     }
 
-    public String getGameUsingID(int id) {
-        try {
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(GAMES_API_URL + "id=" + id))
-                    .GET()
-                    .build();
-
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-            var result = response.body();
-
-            if (result.equals("[]")) {
-                return "Wrong ID, game doesn't exist";
-            }
-
-            return result;
-
-        } catch (InterruptedException | IOException e) {
-            e.printStackTrace();
-            return "";
-        }
-    }
-
-    public GameDealResponse getGameDealObjectUsingID(int id) {
-        try {
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(GAMES_API_URL + "id=" + id))
-                    .GET()
-                    .build();
-
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-            return jsonMapper.mapToGameDealResponse(response.body());
-
-        } catch (InterruptedException | IOException e) {
-            e.printStackTrace();
-            return new GameDealResponse();
-        }
-    }
 
 }

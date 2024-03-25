@@ -1,5 +1,6 @@
-package dev.Roach.datamodel.game;
+package dev.Roach.datamodel;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -11,11 +12,15 @@ public class Game {
     private double cheapestPrice;
     private int gameID;
 
-    public Game(String title, String steamID, double cheapestPrice, int gameID) {
+    public Game(@JsonProperty("internalName") String title,
+                @JsonProperty("gameID") int gameID,
+                @JsonProperty("steamAppID") String steamID,
+                @JsonProperty("cheapest") double cheapestPrice) {
+
         this.title = title;
+        this.gameID = gameID;
         this.steamID = steamID;
         this.cheapestPrice = cheapestPrice;
-        this.gameID = gameID;
     }
 
     @Override

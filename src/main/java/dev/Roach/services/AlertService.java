@@ -1,7 +1,6 @@
-package dev.Roach;
+package dev.Roach.services;
 
-import dev.Roach.datamodel.game.Game;
-import dev.Roach.datamodel.game.GamePojo;
+import dev.Roach.datamodel.Game;
 import dev.Roach.fetchers.GamesFetcher;
 import lombok.Setter;
 
@@ -71,14 +70,12 @@ public class AlertService {
 
         String transformedGameTitle = gameTitle.toUpperCase().replaceAll("\\s", "");
 
-        List<GamePojo> gamePojos = gamesFetcher.getGameContainingKeyword(transformedGameTitle);
+        List<Game> games = gamesFetcher.getGameContainingKeyword(transformedGameTitle);
 
         int gameID = 0;
 
-        for (GamePojo gamePojo : gamePojos) {
-            Game game = new Game(gamePojo.getTitle(), gamePojo.getSteamID(), gamePojo.getCheapestPrice(),
-                    gamePojo.getGameID());
-            if (gamePojo.getTitle().equals(transformedGameTitle)) {
+        for (Game game : games) {
+            if (game.getTitle().equals(transformedGameTitle)) {
                 gameID = game.getGameID();
             }
         }

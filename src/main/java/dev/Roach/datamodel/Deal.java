@@ -1,5 +1,6 @@
-package dev.Roach.datamodel.deal;
+package dev.Roach.datamodel;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -14,7 +15,11 @@ public class Deal {
     private String price;
     private String retailPrice;
 
-    public Deal(String storeID, String dealID, String price, String retailPrice, double savings) {
+    public Deal(@JsonProperty("storeID") String storeID,
+                @JsonProperty("dealID") String dealID,
+                @JsonProperty("salePrice") String price,
+                @JsonProperty("normalPrice") String retailPrice,
+                @JsonProperty("savings") double savings) {
         this.storeID = storeID;
         this.dealID = dealID;
         this.price = price;

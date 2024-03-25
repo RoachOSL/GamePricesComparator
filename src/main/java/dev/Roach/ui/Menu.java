@@ -1,11 +1,12 @@
-package dev.Roach;
+package dev.Roach.ui;
 
-import dev.Roach.datamodel.game.Game;
-import dev.Roach.datamodel.game.GamePojo;
-import dev.Roach.datamodel.gameLookup.GameDealResponse;
-import dev.Roach.datamodel.store.StoreAllPojo;
+import dev.Roach.datamodel.Game;
+import dev.Roach.datamodel.Store;
+import dev.Roach.datamodel.GameLookUp;
 import dev.Roach.fetchers.GamesFetcher;
 import dev.Roach.fetchers.StoresFetcher;
+import dev.Roach.services.AlertService;
+import dev.Roach.services.GameLookUpService;
 
 import java.util.InputMismatchException;
 import java.util.List;
@@ -15,15 +16,15 @@ import java.util.Scanner;
 public class Menu {
     private final Scanner scanner;
     private final StoresFetcher storesFetcher;
-    private final GameLookup gameLookup;
+    private final GameLookUpService gameLookUpService;
     private final GamesFetcher gamesFetcher;
     private final AlertService alertService;
     private boolean isProgramRunning = true;
 
-    public Menu(Scanner scanner, StoresFetcher storesFetcher, GameLookup gameLookup, GamesFetcher gamesFetcher, AlertService alertService) {
+    public Menu(Scanner scanner, StoresFetcher storesFetcher, GameLookUpService gameLookUpService, GamesFetcher gamesFetcher, AlertService alertService) {
         this.scanner = scanner;
         this.storesFetcher = storesFetcher;
-        this.gameLookup = gameLookup;
+        this.gameLookUpService = gameLookUpService;
         this.gamesFetcher = gamesFetcher;
         this.alertService = alertService;
     }
@@ -45,7 +46,7 @@ public class Menu {
     }
 
     private void validateStoreList() {
-        List<StoreAllPojo> currentShops = storesFetcher.readAllShopsFromFile();
+        List<Store> currentShops = storesFetcher.readAllShopsFromFile();
         if (currentShops.isEmpty()) {
             storesFetcher.getAllShops();
         }
@@ -69,7 +70,7 @@ public class Menu {
 
     private void handleMenuOption(int option) {
         switch (option) {
-            case 1 -> searchForDealsByTitle(gameLookup);
+            case 1 -> searchForDealsByTitle(gameLookUpService);
             case 2 -> searchForDealsByKeyword(gamesFetcher);
             case 3 -> setUpPriceAlert(alertService);
             case 4 -> manageAlertsByEmail(alertService);
@@ -94,12 +95,12 @@ public class Menu {
         return choice;
     }
 
-    private void searchForDealsByTitle(GameLookup gameLookup) {
+    private void searchForDealsByTitle(GameLookUpService gameLookUpService) {
         System.out.println("Enter the exact title of the game to find deals:");
         String title = getUserInput();
 
         try {
-            System.out.println(gameLookup.giveTitleToGetListOFDealsWithStores(title));
+            System.out.println(gameLookUpService.giveTitleToGetListOFDealsWithStores(title));
         } catch (NoSuchElementException e) {
             System.out.println(e.getMessage());
             System.out.println("Please try again with a different title.");
@@ -112,10 +113,10 @@ public class Menu {
         System.out.println("Enter a keyword to search for game deals:");
         String keyword = getUserInput();
 
-        List<GamePojo> gamePojos = gamesFetcher.getGameContainingKeyword(keyword);
-        gamePojos.stream().map(pojo -> new Game(pojo.getTitle(), pojo.getSteamID(), pojo.getCheapestPrice(), pojo.getGameID())).limit(25).forEach(System.out::println);
+        List<Game> games = gamesFetcher.getGameContainingKeyword(keyword);
+        games.stream().map(pojo -> new Game(pojo.getTitle(), pojo.getGameID(), pojo.getSteamID(), pojo.getCheapestPrice())).limit(25).forEach(System.out::println);
 
-        if (gamePojos.isEmpty()) {
+        if (games.isEmpty()) {
             System.out.println("No game deals found for the keyword: " + keyword);
         }
 
@@ -181,7 +182,7 @@ public class Menu {
 
     private boolean isTitleValid(String title) {
         try {
-            GameDealResponse response = gameLookup.giveTitleToGetListOFDealsWithStores(title);
+            GameLookUp response = gameLookUpService.giveTitleToGetListOFDealsWithStores(title);
 
             if (response == null) {
                 System.out.println("No response received for the title: " + title);

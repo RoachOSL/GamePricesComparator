@@ -1,8 +1,8 @@
-package dev.Roach;
+package dev.Roach.services;
 
-import dev.Roach.datamodel.game.Game;
-import dev.Roach.datamodel.game.GamePojo;
-import dev.Roach.datamodel.gameLookup.GameDealResponse;
+import dev.Roach.datamodel.Game;
+import dev.Roach.datamodel.GameLookUp;
+import dev.Roach.fetchers.GameLookUpFetcher;
 import dev.Roach.fetchers.GamesFetcher;
 import lombok.Setter;
 
@@ -10,24 +10,23 @@ import java.util.List;
 import java.util.NoSuchElementException;
 
 @Setter
-public class GameLookup {
-    private GamesFetcher gamesFetcher = new GamesFetcher();
+public class GameLookUpService {
+    private final GamesFetcher gamesFetcher = new GamesFetcher();
+    private final GameLookUpFetcher gameLookUpFetcher = new GameLookUpFetcher();
 
-    public GameDealResponse giveTitleToGetListOFDealsWithStores(String gameTitle) {
+    public GameLookUp giveTitleToGetListOFDealsWithStores(String gameTitle) {
         if (gameTitle == null || gameTitle.isEmpty()) {
             throw new NoSuchElementException("Game title cannot be null or empty.");
         }
 
         String transformedGameTitle = gameTitle.toUpperCase().replaceAll("\\s", "");
 
-        List<GamePojo> gamePojos = gamesFetcher.getGameContainingKeyword(transformedGameTitle);
+        List<Game> games = gamesFetcher.getGameContainingKeyword(transformedGameTitle);
 
-        for (GamePojo gamePojo : gamePojos) {
-            Game game = new Game(gamePojo.getTitle(), gamePojo.getSteamID(), gamePojo.getCheapestPrice(),
-                    gamePojo.getGameID());
+        for (Game game : games) {
             if (transformedGameTitle.equals(game.getTitle())) {
 
-                GameDealResponse response = gamesFetcher.getGameDealObjectUsingID(game.getGameID());
+                GameLookUp response = gameLookUpFetcher.getGameLookUpObjectUsingID(game.getGameID());
 
                 if (response.isEmpty()) {
                     throw new NoSuchElementException("Game deal is empty for followed ID: " + game.getGameID());

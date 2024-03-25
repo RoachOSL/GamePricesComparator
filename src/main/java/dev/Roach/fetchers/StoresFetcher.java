@@ -3,8 +3,9 @@ package dev.Roach.fetchers;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dev.Roach.JSONMapper;
-import dev.Roach.datamodel.store.StoreAllPojo;
+import dev.Roach.datamodel.Store;
+import dev.Roach.mappers.StoresMapper;
+import dev.Roach.util.SharedObjectMapper;
 import lombok.Setter;
 
 import java.io.File;
@@ -23,12 +24,12 @@ import java.util.List;
 @Setter
 public class StoresFetcher {
     private HttpClient client = HttpClient.newBuilder().build();
-    private final ObjectMapper objectMapper = new ObjectMapper();
+    private static final ObjectMapper objectMapper = SharedObjectMapper.getObjectMapper();
     private static final String STORES_API_URL = "https://www.cheapshark.com/api/1.0/stores";
     private static final String FILE_PATH_TO_STORES = "dataFromApi/ShopList.txt";
 
-    public List<StoreAllPojo> getAllShops() {
-        JSONMapper jsonMapper = new JSONMapper();
+    public List<Store> getAllShops() {
+        StoresMapper jsonMapper = new StoresMapper();
 
         try (FileWriter fw = new FileWriter(FILE_PATH_TO_STORES)) {
             HttpRequest request = HttpRequest.newBuilder()
@@ -54,11 +55,11 @@ public class StoresFetcher {
         }
     }
 
-    public List<StoreAllPojo> readAllShopsFromFile() {
+    public List<Store> readAllShopsFromFile() {
         try {
             if (new File(FILE_PATH_TO_STORES).exists() && isFileRecent()) {
                 String json = new String(Files.readAllBytes(Paths.get(FILE_PATH_TO_STORES)));
-                return objectMapper.readValue(json, new TypeReference<ArrayList<StoreAllPojo>>() {
+                return objectMapper.readValue(json, new TypeReference<ArrayList<Store>>() {
                 });
             } else {
                 return Collections.emptyList();
