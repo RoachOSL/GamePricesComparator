@@ -1,6 +1,5 @@
 package dev.Roach.fetchers;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -14,12 +13,12 @@ import java.net.http.HttpResponse;
 @Getter
 public class DealsFetcher {
     private HttpClient client = HttpClient.newBuilder().build();
-    private final ObjectMapper objectMapper = new ObjectMapper();
     private static final String DEALS_API_URL = "https://www.cheapshark.com/api/1.0/deals?";
 
     public String getDealUsingID(String id) {
+
         if (id == null) {
-            return "NULL";
+            return "";
         }
 
         try {

@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DealsMapper {
-    private static final ObjectMapper objectMapper = SharedObjectMapper.getObjectMapper();
+    private final ObjectMapper objectMapper = SharedObjectMapper.getObjectMapper();
 
     public Deal mapDealToJava(String json) {
         try {

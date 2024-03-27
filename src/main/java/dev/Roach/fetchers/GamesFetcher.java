@@ -43,5 +43,28 @@ public class GamesFetcher {
         }
     }
 
+    public String getGameUsingID(int id) {
+        try {
+            HttpRequest request = HttpRequest.newBuilder()
+                    .uri(URI.create(GAMES_API_URL + "id=" + id))
+                    .GET()
+                    .build();
+
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+
+            String result = response.body();
+
+            if (result.equals("[]")) {
+                return "Wrong ID, game doesn't exist";
+            }
+
+            return result;
+
+        } catch (InterruptedException | IOException e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
 
 }

@@ -11,10 +11,10 @@ import java.util.NoSuchElementException;
 
 @Setter
 public class GameLookUpService {
-    private final GamesFetcher gamesFetcher = new GamesFetcher();
-    private final GameLookUpFetcher gameLookUpFetcher = new GameLookUpFetcher();
+    private GamesFetcher gamesFetcher = new GamesFetcher();
+    private GameLookUpFetcher gameLookUpFetcher = new GameLookUpFetcher();
 
-    public GameLookUp giveTitleToGetListOFDealsWithStores(String gameTitle) {
+    public GameLookUp giveTitleToGetListOfDealsWithStores(String gameTitle) {
         if (gameTitle == null || gameTitle.isEmpty()) {
             throw new NoSuchElementException("Game title cannot be null or empty.");
         }
@@ -24,7 +24,10 @@ public class GameLookUpService {
         List<Game> games = gamesFetcher.getGameContainingKeyword(transformedGameTitle);
 
         for (Game game : games) {
-            if (transformedGameTitle.equals(game.getTitle())) {
+
+            String normalizedGameTitle = game.getTitle().toUpperCase().replaceAll("\\s", "");
+
+            if (transformedGameTitle.equals(normalizedGameTitle)) {
 
                 GameLookUp response = gameLookUpFetcher.getGameLookUpObjectUsingID(game.getGameID());
 

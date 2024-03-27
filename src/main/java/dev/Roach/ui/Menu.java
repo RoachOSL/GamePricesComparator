@@ -48,7 +48,7 @@ public class Menu {
     private void validateStoreList() {
         List<Store> currentShops = storesFetcher.readAllShopsFromFile();
         if (currentShops.isEmpty()) {
-            storesFetcher.getAllShops();
+            storesFetcher.getAllShopsAndWriteItToTheFile();
         }
     }
 
@@ -100,7 +100,7 @@ public class Menu {
         String title = getUserInput();
 
         try {
-            System.out.println(gameLookUpService.giveTitleToGetListOFDealsWithStores(title));
+            System.out.println(gameLookUpService.giveTitleToGetListOfDealsWithStores(title));
         } catch (NoSuchElementException e) {
             System.out.println(e.getMessage());
             System.out.println("Please try again with a different title.");
@@ -182,7 +182,7 @@ public class Menu {
 
     private boolean isTitleValid(String title) {
         try {
-            GameLookUp response = gameLookUpService.giveTitleToGetListOFDealsWithStores(title);
+            GameLookUp response = gameLookUpService.giveTitleToGetListOfDealsWithStores(title);
 
             if (response == null) {
                 System.out.println("No response received for the title: " + title);

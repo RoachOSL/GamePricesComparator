@@ -26,32 +26,51 @@ public class StoresFetcher {
     private HttpClient client = HttpClient.newBuilder().build();
     private static final ObjectMapper objectMapper = SharedObjectMapper.getObjectMapper();
     private static final String STORES_API_URL = "https://www.cheapshark.com/api/1.0/stores";
-    private static final String FILE_PATH_TO_STORES = "dataFromApi/ShopList.txt";
+    private static final String FILE_PATH_TO_STORES = "src/main/resources/ShopList.txt";
 
-    public List<Store> getAllShops() {
+
+    public List<Store> getAllShopsAndWriteItToTheFile() {
         StoresMapper jsonMapper = new StoresMapper();
+        String storeData = fetchStoreData();
+        if (storeData == null) {
+            return Collections.emptyList();
+        }
+        writeDataToFile(storeData);
 
-        try (FileWriter fw = new FileWriter(FILE_PATH_TO_STORES)) {
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(STORES_API_URL))
-                    .GET()
-                    .build();
-
-            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-
-            fw.write(response.body());
-
-            JsonNode jsonResponse = objectMapper.readTree(response.body());
+        try {
+            JsonNode jsonResponse = objectMapper.readTree(storeData);
 
             if (!jsonResponse.isArray()) {
                 return Collections.emptyList();
             }
 
-            return jsonMapper.mapArrayOfAllStoresToJava(response.body());
-
-        } catch (InterruptedException | IOException e) {
+            return jsonMapper.mapArrayOfAllStoresToJava(storeData);
+        } catch (IOException e) {
             e.printStackTrace();
             return Collections.emptyList();
+        }
+    }
+
+    public String fetchStoreData() {
+        HttpRequest request = HttpRequest.newBuilder()
+                .uri(URI.create(STORES_API_URL))
+                .GET()
+                .build();
+
+        try {
+            HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+            return response.body();
+        } catch (InterruptedException | IOException e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
+    public void writeDataToFile(String data) {
+        try (FileWriter fw = new FileWriter(FILE_PATH_TO_STORES)) {
+            fw.write(data);
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
@@ -70,7 +89,7 @@ public class StoresFetcher {
         }
     }
 
-    private boolean isFileRecent() {
+    public boolean isFileRecent() {
         File file = new File(FILE_PATH_TO_STORES);
         if (!file.exists()) {
             return false;

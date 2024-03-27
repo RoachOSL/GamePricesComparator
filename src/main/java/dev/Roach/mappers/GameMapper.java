@@ -10,9 +10,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GameMapper {
-    private static final ObjectMapper objectMapper = SharedObjectMapper.getObjectMapper();
+    private final ObjectMapper objectMapper = SharedObjectMapper.getObjectMapper();
 
-    public static List<Game> mapArrayOfGamePojoToJava(String json) {
+    public List<Game> mapArrayOfGamePojoToJava(String json) {
         try {
             return objectMapper.readValue(json, new TypeReference<ArrayList<Game>>() {
             });
