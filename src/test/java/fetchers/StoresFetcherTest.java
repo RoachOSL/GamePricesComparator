@@ -145,55 +145,41 @@ public class StoresFetcherTest {
         assertEquals(dataToWrite, fileContent);
     }
 
-    @Test
-    public void readAllShopsFromFileWorksProperly() throws IOException {
-        String jsonToWrite = "[{\"storeID\":\"1\",\"storeName\":\"Test Store\",\"isActive\":true}]";
 
-        storesFetcher.writeDataToFile(jsonToWrite);
+    @Test
+    public void readAllShopsFromFileShouldReadWhenFileIsRecentAndWorksProperly() throws IOException {
+        String jsonToWrite = "[{\"storeID\":\"1\",\"storeName\":\"Test Store\",\"isActive\":true}]";
+        Path filePath = Paths.get(FILE_PATH_TO_ALL_DEALS);
+        Files.write(filePath, jsonToWrite.getBytes());
+
+        boolean modified = new File(FILE_PATH_TO_ALL_DEALS).setLastModified(System.currentTimeMillis());
+        Assertions.assertTrue(modified);
 
         List<Store> stores = storesFetcher.readAllShopsFromFile();
 
-        Assertions.assertNotNull(stores, "The list of stores should not be null");
-        Assertions.assertFalse(stores.isEmpty(), "The list of stores should not be empty");
+        Assertions.assertNotNull(stores);
+        Assertions.assertFalse(stores.isEmpty());
 
         Store expectedStore = stores.get(0);
-
         assertEquals("1", expectedStore.getId());
         assertEquals("Test Store", expectedStore.getName());
         Assertions.assertTrue(expectedStore.isActive());
     }
 
     @Test
-    public void isFileRecentShouldReturnTrueWhenFileModifiedWithinLastThreeDays() throws IOException {
-        Path pathToFile = Paths.get(FILE_PATH_TO_ALL_DEALS);
-        Files.createFile(pathToFile);
+    public void readAllShopsFromFileShouldNotReadWhenFileIsNotRecent() throws IOException {
+        Path filePath = Paths.get(FILE_PATH_TO_ALL_DEALS);
+        Files.createFile(filePath);
 
-        File testFile = pathToFile.toFile();
-
-        boolean modified = testFile.setLastModified(System.currentTimeMillis());
-
+        boolean modified = new File(FILE_PATH_TO_ALL_DEALS).setLastModified(System.currentTimeMillis() - (4 * 24 * 60 * 60 * 1000L));
         Assertions.assertTrue(modified);
 
-        boolean isRecent = storesFetcher.isFileRecent();
+        List<Store> stores = storesFetcher.readAllShopsFromFile();
 
-        Assertions.assertTrue(isRecent);
+        Assertions.assertNotNull(stores);
+        Assertions.assertTrue(stores.isEmpty());
     }
 
-    @Test
-    public void isFileRecentShouldReturnFalseWhenFileNotModifiedWithinLastThreeDays() throws IOException {
-        Path testFilePath = Path.of(FILE_PATH_TO_ALL_DEALS);
-
-        Files.createFile(testFilePath);
-        File testFile = testFilePath.toFile();
-
-        boolean fileNotRecentlyModified = testFile.setLastModified(System.currentTimeMillis() - (4 * 24 * 60 * 60 * 1000L));
-
-        Assertions.assertTrue(fileNotRecentlyModified);
-
-        boolean isRecent = storesFetcher.isFileRecent();
-
-        Assertions.assertFalse(isRecent);
-    }
 
 
 }

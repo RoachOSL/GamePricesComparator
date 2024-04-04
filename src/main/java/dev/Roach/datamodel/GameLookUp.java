@@ -7,6 +7,7 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -47,12 +48,9 @@ public class GameLookUp {
         }
         return sb.toString();
     }
+
     private String getStoreNameFromID(String storeID, List<Store> stores) {
-        return stores.stream()
-                .filter(store -> store.getId().equals(storeID))
-                .findFirst()
-                .map(Store::getName)
-                .orElse("Unknown Store ID: " + storeID);
+        return stores.stream().filter(store -> store.getId().equals(storeID)).findFirst().map(Store::getName).orElse("Unknown Store ID: " + storeID);
     }
 
     private String formatSavings(String savingsStr) {
@@ -70,5 +68,20 @@ public class GameLookUp {
         boolean areDealsEmpty = (deals == null || deals.isEmpty());
 
         return isInfoEmpty && isCheapestPriceEverEmpty && areDealsEmpty;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        GameLookUp that = (GameLookUp) o;
+        return Objects.equals(info, that.info) && Objects.equals(cheapestPriceEver, that.cheapestPriceEver) && Objects.equals(deals, that.deals) && Objects.equals(storesFetcher, that.storesFetcher);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hash(info, cheapestPriceEver, deals, storesFetcher);
+        result = 37 * result;
+        return result;
     }
 }

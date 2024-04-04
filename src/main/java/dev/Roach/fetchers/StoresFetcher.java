@@ -88,8 +88,8 @@ public class StoresFetcher {
             return Collections.emptyList();
         }
     }
-
-    public boolean isFileRecent() {
+    
+    private boolean isFileRecent() {
         File file = new File(FILE_PATH_TO_STORES);
         if (!file.exists()) {
             return false;
